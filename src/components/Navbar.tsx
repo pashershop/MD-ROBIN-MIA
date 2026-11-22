@@ -38,8 +38,8 @@ export function Navbar() {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-[#EAEAEA] bg-white/90 backdrop-blur-md transition-colors duration-200 dark:border-[#222222] dark:bg-[#050505]/90">
-      <Container className="flex h-14 items-center justify-between gap-6 sm:h-16 sm:gap-8">
+    <header className="sticky top-0 z-40 w-full border-b border-[#EAEAEA] bg-white/95 backdrop-blur-md transition-colors duration-200 dark:border-[#222222] dark:bg-[#050505]/95">
+      <Container className="flex h-14 items-center justify-between gap-4 sm:h-16 sm:gap-8">
         <Link
           to="/"
           className="text-lg font-extrabold tracking-[-0.03em] text-[#111111] whitespace-nowrap shrink-0 transition-opacity hover:opacity-75 sm:text-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#111111] dark:text-white dark:focus-visible:outline-white"
@@ -48,7 +48,7 @@ export function Navbar() {
         </Link>
 
         <div className="flex items-center gap-6 lg:gap-8">
-          <nav aria-label="Primary Navigation" className="hidden md:flex items-center gap-7 lg:gap-8">
+          <nav aria-label="Primary Navigation" className="hidden md:flex items-center gap-6 lg:gap-8">
             {NAV_ITEMS.map((item) => {
               const isActive =
                 item.to === '/' ? pathname === '/' : pathname.startsWith(item.to);
@@ -95,7 +95,7 @@ export function Navbar() {
               onClick={toggleTheme}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-[4px] border border-[#EAEAEA] bg-white text-[#111111] transition-colors duration-150 hover:border-[#111111] hover:bg-[#F8F8F8] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111111] dark:border-[#222222] dark:bg-[#111111] dark:text-white dark:hover:border-white dark:hover:bg-[#1A1A1A] dark:focus-visible:outline-white"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-[4px] border border-[#EAEAEA] bg-white text-[#111111] transition-colors duration-150 hover:border-[#111111] hover:bg-[#F8F8F8] sm:h-10 sm:w-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111111] dark:border-[#222222] dark:bg-[#111111] dark:text-white dark:hover:border-white dark:hover:bg-[#1A1A1A] dark:focus-visible:outline-white"
             >
               {theme === 'dark' ? (
                 <Sun className="h-4 w-4" aria-hidden="true" />
@@ -110,7 +110,7 @@ export function Navbar() {
               aria-expanded={mobileOpen}
               aria-controls="mobile-navigation-drawer"
               aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-[4px] border border-[#EAEAEA] bg-white text-[#111111] transition-colors duration-150 hover:border-[#111111] hover:bg-[#F8F8F8] md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111111] dark:border-[#222222] dark:bg-[#111111] dark:text-white dark:hover:border-white dark:hover:bg-[#1A1A1A] dark:focus-visible:outline-white"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-[4px] border border-[#EAEAEA] bg-white text-[#111111] transition-colors duration-150 hover:border-[#111111] hover:bg-[#F8F8F8] md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111111] dark:border-[#222222] dark:bg-[#111111] dark:text-white dark:hover:border-white dark:hover:bg-[#1A1A1A] dark:focus-visible:outline-white"
             >
               {mobileOpen ? (
                 <X className="h-5 w-5" aria-hidden="true" />
@@ -124,38 +124,67 @@ export function Navbar() {
 
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            id="mobile-navigation-drawer"
-            initial={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
-            animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-[#EAEAEA] bg-white md:hidden dark:border-[#222222] dark:bg-[#050505]"
-          >
-            <Container className="py-4">
-              <nav aria-label="Mobile Navigation" className="flex flex-col">
-                {[...NAV_ITEMS, { label: 'Achievements', to: '/achievements' }].map((item, idx) => (
-                  <NavLink
-                    key={item.to}
-                    to={item.to}
-                    end={item.to === '/'}
-                    className={({ isActive }) =>
-                      `flex min-h-[48px] items-center justify-between border-b border-[#EAEAEA] py-3 text-base font-medium transition-colors last:border-b-0 dark:border-[#222222] ${
-                        isActive
-                          ? 'font-semibold text-[#000000] dark:text-white'
-                          : 'text-[#707070] hover:text-[#111111] dark:text-[#A3A3A3] dark:hover:text-white'
-                      }`
-                    }
+          <>
+            <motion.div
+              aria-hidden="true"
+              initial={shouldReduceMotion ? undefined : { opacity: 0 }}
+              animate={shouldReduceMotion ? undefined : { opacity: 1 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+              transition={{ duration: 0.18 }}
+              onClick={() => setMobileOpen(false)}
+              className="fixed inset-x-0 top-14 bottom-0 z-30 bg-black/25 backdrop-blur-[2px] sm:top-16 md:hidden dark:bg-black/60"
+            />
+
+            <motion.div
+              id="mobile-navigation-drawer"
+              initial={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
+              animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="relative z-40 max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-[#EAEAEA] bg-white shadow-lg sm:max-h-[calc(100dvh-4rem)] md:hidden dark:border-[#222222] dark:bg-[#050505]"
+            >
+              <Container className="py-4">
+                <nav aria-label="Mobile Navigation" className="flex flex-col">
+                  {[...NAV_ITEMS, { label: 'Achievements', to: '/achievements' }].map(
+                    (item, idx) => (
+                      <NavLink
+                        key={item.to}
+                        to={item.to}
+                        end={item.to === '/'}
+                        className={({ isActive }) =>
+                          `flex min-h-[48px] items-center justify-between border-b border-[#EAEAEA] py-3 text-base font-medium transition-colors last:border-b-0 dark:border-[#222222] ${
+                            isActive
+                              ? 'font-semibold text-[#000000] dark:text-white'
+                              : 'text-[#707070] hover:text-[#111111] dark:text-[#A3A3A3] dark:hover:text-white'
+                          }`
+                        }
+                      >
+                        <span>{item.label}</span>
+                        <span className="font-mono-tabular text-xs text-[#707070] dark:text-[#A3A3A3]">
+                          0{idx + 1}
+                        </span>
+                      </NavLink>
+                    ),
+                  )}
+                </nav>
+
+                <div className="mt-3 border-t border-[#EAEAEA] pt-3 dark:border-[#222222]">
+                  <button
+                    type="button"
+                    onClick={toggleTheme}
+                    className="flex min-h-[48px] w-full items-center justify-between rounded-[4px] border border-[#EAEAEA] bg-[#F8F8F8] px-4 py-2.5 text-sm font-medium text-[#111111] transition-colors hover:border-[#111111] dark:border-[#222222] dark:bg-[#111111] dark:text-white dark:hover:border-white"
                   >
-                    <span>{item.label}</span>
-                    <span className="font-mono-tabular text-xs text-[#707070] dark:text-[#A3A3A3]">
-                      0{idx + 1}
-                    </span>
-                  </NavLink>
-                ))}
-              </nav>
-            </Container>
-          </motion.div>
+                    <span>{theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}</span>
+                    {theme === 'dark' ? (
+                      <Sun className="h-4 w-4" aria-hidden="true" />
+                    ) : (
+                      <Moon className="h-4 w-4" aria-hidden="true" />
+                    )}
+                  </button>
+                </div>
+              </Container>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

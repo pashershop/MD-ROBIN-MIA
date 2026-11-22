@@ -27,6 +27,7 @@ export function loadSiteContent(): SiteContentData {
         ...DEFAULT_SITE_CONTENT.identity,
         ...(parsed.identity ?? {}),
       },
+      educationEntries: parsed.educationEntries ?? DEFAULT_SITE_CONTENT.educationEntries,
       contact: {
         ...DEFAULT_SITE_CONTENT.contact,
         ...(parsed.contact ?? {}),
@@ -86,6 +87,16 @@ CREATE TABLE IF NOT EXISTS skills (
   sort_order INTEGER NOT NULL DEFAULT 0
 );
 
+CREATE TABLE IF NOT EXISTS education_entries (
+  id TEXT PRIMARY KEY,
+  period TEXT NOT NULL,
+  title TEXT NOT NULL,
+  institution_or_context TEXT NOT NULL,
+  summary TEXT NOT NULL,
+  is_placeholder INTEGER NOT NULL DEFAULT 0,
+  sort_order INTEGER NOT NULL DEFAULT 0
+);
+
 CREATE TABLE IF NOT EXISTS projects (
   id TEXT PRIMARY KEY,
   slug TEXT UNIQUE NOT NULL,
@@ -93,7 +104,7 @@ CREATE TABLE IF NOT EXISTS projects (
   short_description TEXT NOT NULL,
   overview TEXT NOT NULL,
   category TEXT NOT NULL,
-  status TEXT NOT NULL CHECK (status IN ('Live', 'In Development', 'Planned')),
+  status TEXT NOT NULL CHECK (status IN ('Live', 'In Development', 'Concept', 'Planned')),
   website_url TEXT,
   sort_order INTEGER NOT NULL DEFAULT 0
 );

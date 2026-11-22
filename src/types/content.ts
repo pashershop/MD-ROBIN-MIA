@@ -1,4 +1,4 @@
-export type ProjectStatus = 'Live' | 'In Development' | 'Planned';
+export type ProjectStatus = 'Live' | 'In Development' | 'Concept' | 'Planned';
 
 export type BlogCategory =
   | 'Technology'
@@ -13,6 +13,15 @@ export interface AboutSectionItem {
   content: string;
   isPlaceholder: boolean;
   placeholderHint?: string;
+}
+
+export interface EducationEntry {
+  id: string;
+  period: string;
+  title: string;
+  institutionOrContext: string;
+  summary: string;
+  isPlaceholder: boolean;
 }
 
 export interface SkillItem {
@@ -97,6 +106,7 @@ export interface SiteContentData {
   identity: SiteIdentity;
   aboutIntro: string;
   aboutSections: AboutSectionItem[];
+  educationEntries: EducationEntry[];
   skills: SkillItem[];
   projects: ProjectItem[];
   achievements: AchievementItem[];

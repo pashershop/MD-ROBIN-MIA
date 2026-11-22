@@ -49,9 +49,9 @@ export default function TermsPage() {
                 3. Project Concepts &amp; Editorial Content
               </h2>
               <p className="type-body mt-2 text-[#707070] dark:text-[#A3A3A3]">
-                Projects marked as &ldquo;Planned&rdquo; or &ldquo;In Development&rdquo; represent
-                ongoing or future initiatives and may evolve over time. Published articles reflect
-                evolving notes, explorations, and technical studies.
+                Projects marked as &ldquo;Planned&rdquo;, &ldquo;Concept&rdquo;, or &ldquo;In
+                Development&rdquo; represent ongoing or early-stage initiatives and may evolve over
+                time. Published articles reflect evolving notes, explorations, and technical studies.
               </p>
             </section>
 

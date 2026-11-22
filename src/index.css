@@ -83,15 +83,15 @@
 
 @layer components {
   .type-hero {
-    font-size: clamp(2.5rem, 12vw, 5rem);
+    font-size: clamp(2.35rem, 11.5vw, 4.75rem);
     font-weight: 800;
-    line-height: 0.94;
+    line-height: 0.96;
     letter-spacing: -0.04em;
   }
 
   @media (min-width: 768px) {
     .type-hero {
-      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      font-size: clamp(3.5rem, 8.5vw, 7.25rem);
     }
   }
 

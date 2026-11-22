@@ -25,14 +25,14 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-5 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs sm:p-5"
       role="dialog"
       aria-modal="true"
       aria-labelledby="project-modal-title"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl rounded-[12px] border border-[#EAEAEA] bg-white p-6 text-[#111111] shadow-xl sm:p-10 dark:border-[#222222] dark:bg-[#111111] dark:text-white"
+        className="relative max-h-[90dvh] w-full max-w-2xl overflow-y-auto rounded-[12px] border border-[#EAEAEA] bg-white p-5 text-[#111111] shadow-xl sm:p-8 lg:p-10 dark:border-[#222222] dark:bg-[#111111] dark:text-white"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4 border-b border-[#EAEAEA] pb-6 dark:border-[#222222]">

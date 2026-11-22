@@ -55,6 +55,26 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
       isPlaceholder: true,
     },
   ],
+  educationEntries: [
+    {
+      id: 'independent-digital-learning',
+      period: 'Ongoing',
+      title: 'Independent Web & Digital Studies',
+      institutionOrContext: 'Self-Directed Learning',
+      summary:
+        'Building practical foundations in modern web structure, clean typography, responsive design systems, and everyday digital tools.',
+      isPlaceholder: false,
+    },
+    {
+      id: 'formal-education-record',
+      period: 'Academic Record',
+      title: 'Formal Educational Background',
+      institutionOrContext: 'Details Pending Update',
+      summary:
+        'Verified school, college, and academic institution records will be documented here once published.',
+      isPlaceholder: true,
+    },
+  ],
   skills: [
     {
       id: 'basic-computer-skills',
@@ -102,7 +122,7 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
       overview:
         'A focused collection of practical, lightweight photo utilities designed to make everyday image adjustments fast and accessible directly from the browser.',
       category: 'Photo & Utility',
-      status: 'Planned',
+      status: 'In Development',
       websiteUrl: null,
       urlPlaceholderNote: 'Website link will be published once this project launches.',
       highlights: [
@@ -119,7 +139,7 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
       overview:
         'A clean digital image platform concept centered on organizing, presenting, and discovering visual assets with clarity and speed.',
       category: 'Digital Media',
-      status: 'Planned',
+      status: 'Concept',
       websiteUrl: null,
       urlPlaceholderNote: 'Website link will be published once this project launches.',
       highlights: [
@@ -153,7 +173,7 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
       overview:
         'A neighborhood discovery concept connecting people with nearby local shops, essential products, and community storefronts.',
       category: 'Local Commerce',
-      status: 'Planned',
+      status: 'Concept',
       websiteUrl: null,
       urlPlaceholderNote: 'Website link will be published once this project launches.',
       highlights: [

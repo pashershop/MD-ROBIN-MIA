@@ -6,7 +6,7 @@ import { SeoHead } from '../components/SeoHead';
 import { Button, Container, Section } from '../components/ui/DesignSystem';
 import type { ProjectStatus } from '../types/content';
 
-const STATUS_OPTIONS: ProjectStatus[] = ['Live', 'In Development', 'Planned'];
+const STATUS_OPTIONS: ProjectStatus[] = ['Live', 'In Development', 'Concept', 'Planned'];
 
 export default function ContentSchemaPage() {
   const { content, updateContent, resetContent, hasDraft } = useSite();
@@ -65,6 +65,20 @@ export default function ContentSchemaPage() {
       ...content,
       aboutSections: content.aboutSections.map((sec) =>
         sec.id === id ? { ...sec, content: value, isPlaceholder: false } : sec,
+      ),
+    };
+    updateContent(next);
+  };
+
+  const handleEducationChange = (
+    id: string,
+    field: 'period' | 'title' | 'institutionOrContext' | 'summary',
+    value: string,
+  ) => {
+    const next = {
+      ...content,
+      educationEntries: content.educationEntries.map((entry) =>
+        entry.id === id ? { ...entry, [field]: value, isPlaceholder: false } : entry,
       ),
     };
     updateContent(next);
@@ -291,6 +305,86 @@ export default function ContentSchemaPage() {
                     onChange={(e) => handleAboutSectionChange(sec.id, e.target.value)}
                     className="mt-1.5 w-full rounded-[4px] border border-[#EAEAEA] bg-white p-3 text-xs text-[#111111] dark:border-[#222222] dark:bg-[#161616] dark:text-white"
                   />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-[8px] border border-[#EAEAEA] bg-white p-6 sm:p-8 dark:border-[#222222] dark:bg-[#111111]">
+            <h2 className="type-subheading text-[#111111] dark:text-white">
+              Educational Background Entries
+            </h2>
+            <p className="mt-1 text-xs text-[#707070] dark:text-[#A3A3A3]">
+              Update academic period, institution, focus title, and summary shown on the About page.
+            </p>
+            <div className="mt-6 space-y-5">
+              {content.educationEntries.map((entry) => (
+                <div
+                  key={entry.id}
+                  className="grid grid-cols-1 gap-3 rounded-[8px] border border-[#EAEAEA] p-4 sm:grid-cols-2 dark:border-[#222222]"
+                >
+                  <div>
+                    <label
+                      htmlFor={`schema-edu-period-${entry.id}`}
+                      className="type-label block uppercase text-[#707070] dark:text-[#A3A3A3]"
+                    >
+                      Period / Label
+                    </label>
+                    <input
+                      id={`schema-edu-period-${entry.id}`}
+                      type="text"
+                      value={entry.period}
+                      onChange={(e) => handleEducationChange(entry.id, 'period', e.target.value)}
+                      className="mt-1 min-h-[40px] w-full rounded-[4px] border border-[#EAEAEA] bg-white px-3 text-xs text-[#111111] dark:border-[#222222] dark:bg-[#161616] dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor={`schema-edu-inst-${entry.id}`}
+                      className="type-label block uppercase text-[#707070] dark:text-[#A3A3A3]"
+                    >
+                      Institution / Context
+                    </label>
+                    <input
+                      id={`schema-edu-inst-${entry.id}`}
+                      type="text"
+                      value={entry.institutionOrContext}
+                      onChange={(e) =>
+                        handleEducationChange(entry.id, 'institutionOrContext', e.target.value)
+                      }
+                      className="mt-1 min-h-[40px] w-full rounded-[4px] border border-[#EAEAEA] bg-white px-3 text-xs text-[#111111] dark:border-[#222222] dark:bg-[#161616] dark:text-white"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor={`schema-edu-title-${entry.id}`}
+                      className="type-label block uppercase text-[#707070] dark:text-[#A3A3A3]"
+                    >
+                      Title
+                    </label>
+                    <input
+                      id={`schema-edu-title-${entry.id}`}
+                      type="text"
+                      value={entry.title}
+                      onChange={(e) => handleEducationChange(entry.id, 'title', e.target.value)}
+                      className="mt-1 min-h-[40px] w-full rounded-[4px] border border-[#EAEAEA] bg-white px-3 text-xs text-[#111111] dark:border-[#222222] dark:bg-[#161616] dark:text-white"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor={`schema-edu-summary-${entry.id}`}
+                      className="type-label block uppercase text-[#707070] dark:text-[#A3A3A3]"
+                    >
+                      Summary
+                    </label>
+                    <textarea
+                      id={`schema-edu-summary-${entry.id}`}
+                      rows={2}
+                      value={entry.summary}
+                      onChange={(e) => handleEducationChange(entry.id, 'summary', e.target.value)}
+                      className="mt-1 w-full rounded-[4px] border border-[#EAEAEA] bg-white p-3 text-xs text-[#111111] dark:border-[#222222] dark:bg-[#161616] dark:text-white"
+                    />
+                  </div>
                 </div>
               ))}
             </div>

@@ -32,27 +32,30 @@ export default function SkillsPage() {
           <div className="divide-y divide-[#EAEAEA] overflow-hidden rounded-[8px] border border-[#EAEAEA] bg-white dark:divide-[#222222] dark:border-[#222222] dark:bg-[#111111]">
             {content.skills.map((skill, idx) => (
               <Reveal key={skill.id} delay={idx * 0.04}>
-                <article className="group grid grid-cols-1 gap-4 px-6 py-8 transition-colors duration-150 hover:bg-[#F8F8F8] sm:px-8 md:grid-cols-12 md:items-center dark:hover:bg-[#171717]">
-                  <div className="flex items-center gap-4 md:col-span-5">
+                <article className="group grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-3 gap-y-2 px-5 py-6 transition-colors duration-150 hover:bg-[#F8F8F8] sm:px-8 sm:py-7 md:grid-cols-12 md:items-center md:gap-x-6 md:gap-y-0 lg:gap-x-8 dark:hover:bg-[#171717]">
+                  <div className="col-start-1 row-start-1 pt-1 md:col-span-1 md:pt-0">
                     <span className="font-mono-tabular text-xs font-medium text-[#707070] dark:text-[#A3A3A3]">
                       0{idx + 1}
                     </span>
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-[4px] border border-[#EAEAEA] text-[#111111] transition-colors group-hover:border-[#111111] dark:border-[#222222] dark:text-white dark:group-hover:border-white">
+                  </div>
+
+                  <div className="col-start-2 row-start-1 flex min-w-0 items-center gap-3 md:col-start-auto md:col-span-4">
+                    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[4px] border border-[#EAEAEA] text-[#111111] transition-colors group-hover:border-[#111111] dark:border-[#222222] dark:text-white dark:group-hover:border-white">
                       <SkillIcon skillId={skill.id} className="h-4 w-4" />
                     </span>
-                    <h2 className="text-lg font-semibold tracking-tight text-[#000000] transition-transform duration-150 group-hover:translate-x-1 sm:text-xl dark:text-white">
+                    <h2 className="min-w-0 text-base font-semibold tracking-tight text-[#000000] transition-transform duration-150 group-hover:translate-x-0.5 sm:text-lg dark:text-white">
                       {skill.name}
                     </h2>
                   </div>
 
-                  <div className="md:col-span-3">
-                    <span className="type-label uppercase text-[#707070] dark:text-[#A3A3A3]">
+                  <div className="col-start-2 min-w-0 md:col-start-auto md:col-span-3">
+                    <span className="block text-[11px] font-medium tracking-[0.11em] text-[#707070] uppercase dark:text-[#A3A3A3]">
                       {skill.area}
                     </span>
                   </div>
 
-                  <div className="md:col-span-4">
-                    <p className="text-sm leading-relaxed text-[#707070] dark:text-[#A3A3A3]">
+                  <div className="col-start-2 min-w-0 md:col-start-auto md:col-span-4">
+                    <p className="text-sm leading-[1.7] text-[#707070] dark:text-[#A3A3A3]">
                       {skill.note}
                     </p>
                   </div>
@@ -61,19 +64,19 @@ export default function SkillsPage() {
             ))}
           </div>
 
-          <div className="mt-12 flex flex-col items-start justify-between gap-6 border-t border-[#EAEAEA] pt-8 sm:flex-row sm:items-center dark:border-[#222222]">
+          <div className="mt-10 flex flex-col items-start justify-between gap-6 border-t border-[#EAEAEA] pt-8 sm:mt-12 sm:flex-row sm:items-center dark:border-[#222222]">
             <p className="max-w-xl text-sm leading-relaxed text-[#707070] dark:text-[#A3A3A3]">
               See how these foundational skills connect with ongoing experiments and platform ideas.
             </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <ButtonLink to="/projects" variant="primary" className="group">
+            <div className="grid w-full grid-cols-1 gap-3 sm:flex sm:w-auto sm:flex-wrap sm:items-center">
+              <ButtonLink to="/projects" variant="primary" className="group w-full sm:w-auto">
                 <span>View Projects</span>
                 <ArrowRight
                   className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-1"
                   aria-hidden="true"
                 />
               </ButtonLink>
-              <ButtonLink to="/achievements" variant="secondary">
+              <ButtonLink to="/achievements" variant="secondary" className="w-full sm:w-auto">
                 Achievements
               </ButtonLink>
             </div>

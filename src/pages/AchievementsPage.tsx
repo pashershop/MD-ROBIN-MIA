@@ -58,7 +58,7 @@ export default function AchievementsPage() {
         <div
           role="group"
           aria-label="Filter achievements by category"
-          className="mt-8 flex w-fit max-w-full flex-wrap items-center gap-1 rounded-[4px] border border-[#EAEAEA] bg-[#F8F8F8] p-1 sm:mt-10 dark:border-[#222222] dark:bg-[#111111]"
+          className="mt-8 flex w-full flex-wrap items-center gap-1 rounded-[4px] border border-[#EAEAEA] bg-[#F8F8F8] p-1 sm:mt-10 sm:w-fit dark:border-[#222222] dark:bg-[#111111]"
         >
           {GROUPS.map((group) => {
             const active = selectedGroup === group;
@@ -68,7 +68,7 @@ export default function AchievementsPage() {
                 type="button"
                 onClick={() => setSelectedGroup(group)}
                 aria-pressed={active}
-                className={`min-h-[38px] rounded-[4px] px-3.5 py-1.5 text-xs font-medium transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111111] dark:focus-visible:outline-white ${
+                className={`min-h-[40px] rounded-[4px] px-3 py-1.5 text-xs font-medium transition-colors whitespace-nowrap shrink-0 sm:px-3.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111111] dark:focus-visible:outline-white ${
                   active
                     ? 'bg-[#111111] text-white dark:bg-white dark:text-[#111111]'
                     : 'text-[#707070] hover:text-[#111111] dark:text-[#A3A3A3] dark:hover:text-white'
