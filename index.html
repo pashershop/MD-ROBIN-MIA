@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MD ROBIN MIA | Personal Website &amp; Digital Portfolio</title>
+    <meta
+      name="description"
+      content="Explore the personal website of MD Robin Mia — discover projects, skills, ideas, achievements and digital experiences."
+    />
+    <meta name="author" content="MD Robin Mia" />
+    <meta name="theme-color" content="#111111" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="https://mdrobinmia.example/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MD ROBIN MIA — MRM." />
+    <meta property="og:title" content="MD ROBIN MIA | Personal Website &amp; Digital Portfolio" />
+    <meta
+      property="og:description"
+      content="Explore the personal website of MD Robin Mia — discover projects, skills, ideas, achievements and digital experiences."
+    />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="MD ROBIN MIA | Personal Website &amp; Digital Portfolio" />
+    <meta
+      name="twitter:description"
+      content="Explore the personal website of MD Robin Mia — discover projects, skills, ideas, achievements and digital experiences."
+    />
+
+    <!-- Typography: Manrope (400-800) & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data: Person Schema (no fabricated fields) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "MD Robin Mia",
+        "alternateName": "MRM",
+        "description": "Curious learner passionate about technology, digital creativity, and building meaningful digital experiences.",
+        "knowsAbout": [
+          "Technology",
+          "Digital Creativity",
+          "Web Development",
+          "Canva",
+          "Social Media"
+        ]
+      }
+    </script>
+
+    <!-- Prevent theme flash on initial render -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('mrm-theme');
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (stored === 'dark' || (!stored && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-white text-[#111111] antialiased selection:bg-[#111111] selection:text-white dark:bg-[#050505] dark:text-white dark:selection:bg-white dark:selection:text-[#111111]">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
