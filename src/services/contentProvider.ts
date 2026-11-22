@@ -20,17 +20,50 @@ export function loadSiteContent(): SiteContentData {
       return DEFAULT_SITE_CONTENT;
     }
     const parsed = JSON.parse(raw) as Partial<SiteContentData>;
+    const rawBaseUrl = parsed.identity?.canonicalBaseUrl;
+    const safeBaseUrl =
+      rawBaseUrl && !rawBaseUrl.includes('.example')
+        ? rawBaseUrl
+        : DEFAULT_SITE_CONTENT.identity.canonicalBaseUrl;
+    const rawEmail = parsed.contact?.email ?? '';
+    const safeEmail = rawEmail.includes('.example') ? '' : rawEmail;
+
+    const defaultProjectMap = new Map(DEFAULT_SITE_CONTENT.projects.map((p) => [p.id, p]));
+    const normalizedProjects = (parsed.projects ?? DEFAULT_SITE_CONTENT.projects).map((p) => {
+      const def = defaultProjectMap.get(p.id);
+      return {
+        ...p,
+        techStack: p.techStack ?? def?.techStack ?? ['To be finalized'],
+        developmentProgress:
+          p.developmentProgress ?? def?.developmentProgress ?? 'Early planning stage',
+      };
+    });
+
+    const defaultSkillMap = new Map(DEFAULT_SITE_CONTENT.skills.map((s) => [s.id, s]));
+    const normalizedSkills = (parsed.skills ?? DEFAULT_SITE_CONTENT.skills).map((s) => {
+      const def = defaultSkillMap.get(s.id);
+      return {
+        ...s,
+        stage: s.stage ?? def?.stage ?? 'Current Skills',
+      };
+    });
+
     return {
       ...DEFAULT_SITE_CONTENT,
       ...parsed,
       identity: {
         ...DEFAULT_SITE_CONTENT.identity,
         ...(parsed.identity ?? {}),
+        canonicalBaseUrl: safeBaseUrl,
       },
+      skills: normalizedSkills,
+      projects: normalizedProjects,
       educationEntries: parsed.educationEntries ?? DEFAULT_SITE_CONTENT.educationEntries,
       contact: {
         ...DEFAULT_SITE_CONTENT.contact,
         ...(parsed.contact ?? {}),
+        email: safeEmail,
+        emailIsPlaceholder: safeEmail.trim() === '' || safeEmail.includes('.example'),
       },
     };
   } catch {
@@ -82,6 +115,7 @@ CREATE TABLE IF NOT EXISTS about_sections (
 CREATE TABLE IF NOT EXISTS skills (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
+  stage TEXT NOT NULL CHECK (stage IN ('Current Skills', 'Currently Learning', 'Areas of Interest')),
   area TEXT NOT NULL,
   note TEXT NOT NULL,
   sort_order INTEGER NOT NULL DEFAULT 0
@@ -106,6 +140,8 @@ CREATE TABLE IF NOT EXISTS projects (
   category TEXT NOT NULL,
   status TEXT NOT NULL CHECK (status IN ('Live', 'In Development', 'Concept', 'Planned')),
   website_url TEXT,
+  tech_stack_json TEXT NOT NULL,
+  development_progress TEXT NOT NULL,
   sort_order INTEGER NOT NULL DEFAULT 0
 );
 

@@ -46,6 +46,23 @@ export function ProjectCard({
         <p className="mt-3 text-sm leading-[1.65] text-[#707070] dark:text-[#A3A3A3]">
           {project.overview}
         </p>
+
+        <dl className="mt-4 space-y-2 border-t border-[#EAEAEA] pt-3.5 text-xs dark:border-[#222222]">
+          <div className="flex flex-col gap-0.5">
+            <dt className="font-medium tracking-wider text-[#707070] uppercase dark:text-[#A3A3A3]">
+              Progress
+            </dt>
+            <dd className="text-[#111111] dark:text-[#E5E5E5]">{project.developmentProgress}</dd>
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <dt className="font-medium tracking-wider text-[#707070] uppercase dark:text-[#A3A3A3]">
+              Stack
+            </dt>
+            <dd className="text-[#707070] dark:text-[#A3A3A3]">
+              {project.techStack.join(' · ')}
+            </dd>
+          </div>
+        </dl>
       </div>
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[#EAEAEA] pt-4 sm:mt-7 dark:border-[#222222]">
@@ -66,7 +83,7 @@ export function ProjectCard({
               onClick={() => onSelect(project)}
               className="inline-flex min-h-[44px] items-center gap-1.5 text-xs font-medium tracking-[0.1em] text-[#707070] uppercase transition-colors hover:text-[#111111] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111111] dark:text-[#A3A3A3] dark:hover:text-white dark:focus-visible:outline-white"
             >
-              <span>Details</span>
+              <span>Case Study</span>
               <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
             </button>
           </>
@@ -81,7 +98,7 @@ export function ProjectCard({
               onClick={() => onSelect(project)}
               className="inline-flex min-h-[44px] items-center gap-1.5 rounded-[4px] border border-[#EAEAEA] px-3.5 py-2 text-xs font-medium tracking-[0.1em] text-[#111111] uppercase transition-colors hover:border-[#111111] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111111] dark:border-[#222222] dark:text-white dark:hover:border-white dark:focus-visible:outline-white"
             >
-              <span>Overview</span>
+              <span>Case Study</span>
               <ArrowRight
                 className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
                 aria-hidden="true"

@@ -1,11 +1,13 @@
 export type ProjectStatus = 'Live' | 'In Development' | 'Concept' | 'Planned';
 
+export type SkillStage = 'Current Skills' | 'Currently Learning' | 'Areas of Interest';
+
 export type BlogCategory =
   | 'Technology'
   | 'Web Development'
-  | 'AI & Innovation'
-  | 'Personal Thoughts'
-  | 'Tutorials';
+  | 'AI & Machine Learning'
+  | 'Digital Projects'
+  | 'Learning Journey';
 
 export interface AboutSectionItem {
   id: string;
@@ -27,6 +29,7 @@ export interface EducationEntry {
 export interface SkillItem {
   id: string;
   name: string;
+  stage: SkillStage;
   area: string;
   note: string;
 }
@@ -42,6 +45,8 @@ export interface ProjectItem {
   websiteUrl: string | null;
   urlPlaceholderNote: string;
   highlights: string[];
+  techStack: string[];
+  developmentProgress: string;
 }
 
 export type AchievementGroup =

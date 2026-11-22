@@ -17,7 +17,8 @@ export default function BlogPostPage() {
       <>
         <SeoHead
           title="Article Not Found | MD ROBIN MIA"
-          description="The requested article could not be found."
+          description="The requested article could not be found on MD Robin Mia."
+          noIndex
         />
         <Section surface="white">
           <Container className="max-w-3xl text-center">
@@ -40,10 +41,12 @@ export default function BlogPostPage() {
     );
   }
 
+  const baseUrl = content.identity.canonicalBaseUrl.replace(/\/+$/, '');
+  const canonicalPostUrl = `${baseUrl}/blog/${post.slug}`;
   const shareUrl =
-    typeof window !== 'undefined'
-      ? window.location.href
-      : `${content.identity.canonicalBaseUrl}/blog/${post.slug}`;
+    typeof window !== 'undefined' && !window.location.origin.includes('.example')
+      ? `${window.location.origin}/blog/${post.slug}`
+      : canonicalPostUrl;
 
   const handleCopyLink = async () => {
     try {
@@ -83,6 +86,17 @@ export default function BlogPostPage() {
         description={post.excerpt}
         canonicalPath={`/blog/${post.slug}`}
         ogType="article"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: post.title,
+          description: post.excerpt,
+          datePublished: post.publishDate,
+          articleSection: post.category,
+          url: canonicalPostUrl,
+          mainEntityOfPage: canonicalPostUrl,
+          author: { '@id': `${baseUrl}/#person` },
+        }}
       />
 
       <article className="bg-white py-12 sm:py-16 lg:py-24 dark:bg-[#050505]">

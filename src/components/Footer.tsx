@@ -62,25 +62,37 @@ export function Footer() {
             </p>
 
             <div className="mt-6 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-              <span className="text-sm text-[#E5E5E5] break-all">{content.contact.email}</span>
-              <button
-                type="button"
-                onClick={handleCopyEmail}
-                aria-label="Copy email address"
-                className="inline-flex min-h-[44px] items-center gap-1.5 rounded-[4px] border border-[#333333] px-3.5 py-1.5 text-xs font-medium text-white transition-colors hover:border-white hover:bg-white hover:text-[#000000] whitespace-nowrap shrink-0 sm:min-h-[38px]"
-              >
-                {copied ? (
-                  <>
-                    <Check className="h-3.5 w-3.5" aria-hidden="true" />
-                    <span>Copied</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-3.5 w-3.5" aria-hidden="true" />
-                    <span>Copy Email</span>
-                  </>
-                )}
-              </button>
+              {content.contact.email.trim() ? (
+                <>
+                  <span className="text-sm text-[#E5E5E5] break-all">{content.contact.email}</span>
+                  <button
+                    type="button"
+                    onClick={handleCopyEmail}
+                    aria-label="Copy email address"
+                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-[4px] border border-[#333333] px-3.5 py-1.5 text-xs font-medium text-white transition-colors hover:border-white hover:bg-white hover:text-[#000000] whitespace-nowrap shrink-0 sm:min-h-[38px]"
+                  >
+                    {copied ? (
+                      <>
+                        <Check className="h-3.5 w-3.5" aria-hidden="true" />
+                        <span>Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+                        <span>Copy Email</span>
+                      </>
+                    )}
+                  </button>
+                </>
+              ) : (
+                <Link
+                  to="/contact"
+                  className="inline-flex min-h-[44px] items-center gap-2 rounded-[4px] border border-[#333333] px-4 py-2 text-xs font-medium tracking-[0.1em] text-white uppercase transition-colors hover:border-white hover:bg-white hover:text-[#000000] sm:min-h-[38px]"
+                >
+                  <span>Contact Page</span>
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </Link>
+              )}
             </div>
           </div>
 

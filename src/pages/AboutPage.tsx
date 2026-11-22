@@ -17,9 +17,16 @@ export default function AboutPage() {
   return (
     <>
       <SeoHead
-        title="About Me | MD ROBIN MIA"
-        description="Learn about MD Robin Mia — personal introduction, journey, educational background, milestones, vision, and goals."
+        title="About MD Robin Mia | Story, Education & Milestones"
+        description="Learn about MD Robin Mia, his personal journey, independent web learning, educational background, and key personal milestones."
         canonicalPath="/about"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'ProfilePage',
+          name: 'About MD Robin Mia',
+          url: `${content.identity.canonicalBaseUrl}/about`,
+          mainEntity: { '@id': `${content.identity.canonicalBaseUrl}/#person` },
+        }}
       />
 
       <PageHeroHeader

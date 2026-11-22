@@ -6,7 +6,7 @@ export default function TermsPage() {
     <>
       <SeoHead
         title="Terms & Conditions | MD ROBIN MIA"
-        description="Terms and Conditions for browsing and using the personal website of MD Robin Mia (MRM.)."
+        description="Review the Terms and Conditions governing informational browsing, content ownership, and project concepts on MD Robin Mia."
         canonicalPath="/terms-and-conditions"
       />
 

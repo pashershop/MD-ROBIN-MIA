@@ -45,8 +45,8 @@ export default function AchievementsPage() {
   return (
     <>
       <SeoHead
-        title="Achievements | MD ROBIN MIA"
-        description="Certificates showcase, educational background, personal milestones, and awards timeline for MD Robin Mia."
+        title="Achievements & Milestones | MD ROBIN MIA"
+        description="View personal milestones, educational progress, certificates archive, and upcoming recognitions documented by MD Robin Mia."
         canonicalPath="/achievements"
       />
 
@@ -146,13 +146,18 @@ export default function AchievementsPage() {
                 See how these milestones connect with my skills and active digital projects.
               </p>
             </div>
-            <ButtonLink to="/projects" variant="primary" className="group w-full sm:w-auto">
-              <span>View Projects</span>
-              <ArrowRight
-                className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-1"
-                aria-hidden="true"
-              />
-            </ButtonLink>
+            <div className="grid w-full grid-cols-1 gap-3 sm:flex sm:w-auto sm:flex-wrap sm:items-center">
+              <ButtonLink to="/about" variant="secondary" className="w-full sm:w-auto">
+                About Me
+              </ButtonLink>
+              <ButtonLink to="/projects" variant="primary" className="group w-full sm:w-auto">
+                <span>View Projects</span>
+                <ArrowRight
+                  className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </ButtonLink>
+            </div>
           </div>
         </Container>
       </Section>

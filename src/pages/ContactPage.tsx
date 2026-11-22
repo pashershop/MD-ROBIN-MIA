@@ -102,23 +102,37 @@ export default function ContactPage() {
       return;
     }
 
+    const hasConfiguredEmail = content.contact.email.trim().length > 0;
     const formattedBody = `Name: ${form.fullName.trim()}\nEmail: ${form.email.trim()}\n\n${form.message.trim()}`;
-    const mailtoHref = `mailto:${encodeURIComponent(content.contact.email)}?subject=${encodeURIComponent(
-      form.subject.trim(),
-    )}&body=${encodeURIComponent(formattedBody)}`;
+    const mailtoHref = hasConfiguredEmail
+      ? `mailto:${encodeURIComponent(content.contact.email.trim())}?subject=${encodeURIComponent(
+          form.subject.trim(),
+        )}&body=${encodeURIComponent(formattedBody)}`
+      : '';
 
     setPreparedDraft({
       mailtoHref,
-      formattedText: `To: ${content.contact.email}\nSubject: ${form.subject.trim()}\n\n${formattedBody}`,
+      formattedText: `${
+        hasConfiguredEmail ? `To: ${content.contact.email.trim()}\n` : ''
+      }Subject: ${form.subject.trim()}\n\n${formattedBody}`,
     });
   };
+
+  const hasEmail = content.contact.email.trim().length > 0;
 
   return (
     <>
       <SeoHead
-        title="Contact | MD ROBIN MIA"
-        description="Have an idea? Let's talk. Get in touch with MD Robin Mia via email or social channels."
+        title="Contact MD Robin Mia | Get in Touch"
+        description="Have an idea, question, or collaboration inquiry? Reach out to MD Robin Mia using the contact form or available channels."
         canonicalPath="/contact"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'ContactPage',
+          name: 'Contact MD Robin Mia',
+          url: `${content.identity.canonicalBaseUrl}/contact`,
+          mainEntity: { '@id': `${content.identity.canonicalBaseUrl}/#person` },
+        }}
       />
 
       <PageHeroHeader
@@ -135,33 +149,53 @@ export default function ContactPage() {
                 <h2 className="type-label uppercase text-[#707070] dark:text-[#A3A3A3]">
                   Email Contact
                 </h2>
-                <p className="mt-4 text-lg font-bold text-[#000000] break-all sm:text-xl dark:text-white">
-                  {content.contact.email}
-                </p>
 
-                <div className="mt-6 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center">
-                  <Button type="button" variant="primary" onClick={handleCopyEmail} className="w-full sm:w-auto">
-                    {emailCopied ? (
-                      <>
-                        <Check className="h-3.5 w-3.5" aria-hidden="true" />
-                        <span>Copied</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-3.5 w-3.5" aria-hidden="true" />
-                        <span>Copy Email</span>
-                      </>
-                    )}
-                  </Button>
+                {hasEmail ? (
+                  <>
+                    <p className="mt-4 text-lg font-bold text-[#000000] break-all sm:text-xl dark:text-white">
+                      {content.contact.email}
+                    </p>
 
-                  <a
-                    href={`mailto:${content.contact.email}`}
-                    className="inline-flex min-h-[46px] w-full items-center justify-center gap-2 rounded-[4px] border border-[#EAEAEA] px-4 py-3 text-xs font-medium tracking-[0.12em] text-[#111111] uppercase transition-colors hover:border-[#111111] sm:w-auto sm:px-5 dark:border-[#222222] dark:text-white dark:hover:border-white"
-                  >
-                    <Mail className="h-3.5 w-3.5" aria-hidden="true" />
-                    <span>Email App</span>
-                  </a>
-                </div>
+                    <div className="mt-6 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center">
+                      <Button
+                        type="button"
+                        variant="primary"
+                        onClick={handleCopyEmail}
+                        className="w-full sm:w-auto"
+                      >
+                        {emailCopied ? (
+                          <>
+                            <Check className="h-3.5 w-3.5" aria-hidden="true" />
+                            <span>Copied</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+                            <span>Copy Email</span>
+                          </>
+                        )}
+                      </Button>
+
+                      <a
+                        href={`mailto:${content.contact.email}`}
+                        className="inline-flex min-h-[46px] w-full items-center justify-center gap-2 rounded-[4px] border border-[#EAEAEA] px-4 py-3 text-xs font-medium tracking-[0.12em] text-[#111111] uppercase transition-colors hover:border-[#111111] sm:w-auto sm:px-5 dark:border-[#222222] dark:text-white dark:hover:border-white"
+                      >
+                        <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+                        <span>Email App</span>
+                      </a>
+                    </div>
+                  </>
+                ) : (
+                  <div className="mt-4 space-y-2">
+                    <p className="text-base font-semibold text-[#111111] dark:text-white">
+                      Direct Email Coming Soon
+                    </p>
+                    <p className="text-sm leading-relaxed text-[#707070] dark:text-[#A3A3A3]">
+                      A public contact email address has not been published yet. You can prepare a
+                      formatted message using the form on this page.
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div className="rounded-[8px] border border-[#EAEAEA] bg-white p-6 sm:p-8 dark:border-[#222222] dark:bg-[#111111]">
@@ -262,7 +296,7 @@ export default function ContactPage() {
                         required
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        placeholder="you@example.com"
+                        placeholder="name@domain.com"
                         className="mt-2 min-h-[44px] w-full rounded-[4px] border border-[#EAEAEA] bg-transparent px-3.5 py-2 text-sm text-[#111111] placeholder-[#707070] transition-colors focus:border-[#111111] focus:outline-none dark:border-[#222222] dark:text-white dark:placeholder-[#8E8E8E] dark:focus:border-white"
                       />
                     </div>
@@ -345,13 +379,15 @@ export default function ContactPage() {
                         email client or copy the formatted message below to send it directly.
                       </p>
                       <div className="mt-4 flex flex-wrap items-center gap-3">
-                        <a
-                          href={preparedDraft.mailtoHref}
-                          className="inline-flex min-h-[40px] items-center gap-2 rounded-[4px] bg-[#111111] px-4 py-2 text-xs font-medium tracking-wider text-white uppercase dark:bg-white dark:text-[#111111]"
-                        >
-                          <Mail className="h-3.5 w-3.5" aria-hidden="true" />
-                          <span>Open Pre-filled Email</span>
-                        </a>
+                        {preparedDraft.mailtoHref && (
+                          <a
+                            href={preparedDraft.mailtoHref}
+                            className="inline-flex min-h-[40px] items-center gap-2 rounded-[4px] bg-[#111111] px-4 py-2 text-xs font-medium tracking-wider text-white uppercase dark:bg-white dark:text-[#111111]"
+                          >
+                            <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+                            <span>Open Pre-filled Email</span>
+                          </a>
+                        )}
                         <Button type="button" variant="secondary" onClick={handleCopyDraft}>
                           {draftCopied ? (
                             <>

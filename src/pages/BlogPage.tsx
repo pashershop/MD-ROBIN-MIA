@@ -17,9 +17,9 @@ const CATEGORIES: Array<'All' | BlogCategory> = [
   'All',
   'Technology',
   'Web Development',
-  'AI & Innovation',
-  'Personal Thoughts',
-  'Tutorials',
+  'AI & Machine Learning',
+  'Digital Projects',
+  'Learning Journey',
 ];
 
 export default function BlogPage() {
@@ -68,15 +68,22 @@ export default function BlogPage() {
   return (
     <>
       <SeoHead
-        title="Blog | MD ROBIN MIA"
-        description="Read articles and thoughts on technology, web development, AI innovation, and tutorials by MD Robin Mia."
+        title="Blog & Journal Essays | MD ROBIN MIA"
+        description="Read articles, tutorials, and reflections on technology, web development, AI concepts, and digital design written by MD Robin Mia."
         canonicalPath="/blog"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'Blog',
+          name: 'MD Robin Mia Journal',
+          url: `${content.identity.canonicalBaseUrl}/blog`,
+          author: { '@id': `${content.identity.canonicalBaseUrl}/#person` },
+        }}
       />
 
       <PageHeroHeader
-        label="05 / Journal & Essays"
+        label="05 / Content & Learning Notes"
         title="Blog."
-        description="Notes on technology, learning web development, AI experiments, and creative ideas."
+        description="Notes on technology, web development fundamentals, AI workflow explorations, digital projects, and my ongoing learning journey."
       >
         <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="relative w-full lg:max-w-sm">

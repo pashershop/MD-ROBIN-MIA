@@ -6,7 +6,7 @@ export default function PrivacyPolicyPage() {
     <>
       <SeoHead
         title="Privacy Policy | MD ROBIN MIA"
-        description="Privacy Policy for the personal website of MD Robin Mia (MRM.)."
+        description="Read the Privacy Policy for the personal website of MD Robin Mia (MRM.), detailing local storage and visitor privacy practices."
         canonicalPath="/privacy-policy"
       />
 

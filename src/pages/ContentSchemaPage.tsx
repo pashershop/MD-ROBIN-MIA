@@ -34,13 +34,37 @@ export default function ContentSchemaPage() {
     updateContent(next);
   };
 
+  const handleProjectProgressChange = (id: string, developmentProgress: string) => {
+    const next = {
+      ...content,
+      projects: content.projects.map((p) =>
+        p.id === id ? { ...p, developmentProgress } : p,
+      ),
+    };
+    updateContent(next);
+  };
+
+  const handleProjectTechChange = (id: string, value: string) => {
+    const techStack = value
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean);
+    const next = {
+      ...content,
+      projects: content.projects.map((p) =>
+        p.id === id ? { ...p, techStack: techStack.length > 0 ? techStack : ['To be finalized'] } : p,
+      ),
+    };
+    updateContent(next);
+  };
+
   const handleEmailChange = (email: string) => {
     const next = {
       ...content,
       contact: {
         ...content.contact,
         email,
-        emailIsPlaceholder: email.includes('.example'),
+        emailIsPlaceholder: email.trim() === '' || email.includes('.example'),
       },
     };
     updateContent(next);
@@ -215,6 +239,38 @@ export default function ContentSchemaPage() {
                       className="min-h-[40px] w-full rounded-[4px] border border-[#EAEAEA] bg-white px-3 text-xs text-[#111111] placeholder-[#707070] dark:border-[#222222] dark:bg-[#161616] dark:text-white dark:placeholder-[#8E8E8E]"
                     />
                   </div>
+
+                  <div className="md:col-span-6">
+                    <label
+                      htmlFor={`progress-${project.id}`}
+                      className="type-label block uppercase text-[#707070] dark:text-[#A3A3A3]"
+                    >
+                      Development Progress
+                    </label>
+                    <input
+                      id={`progress-${project.id}`}
+                      type="text"
+                      value={project.developmentProgress}
+                      onChange={(e) => handleProjectProgressChange(project.id, e.target.value)}
+                      className="mt-1 min-h-[40px] w-full rounded-[4px] border border-[#EAEAEA] bg-white px-3 text-xs text-[#111111] dark:border-[#222222] dark:bg-[#161616] dark:text-white"
+                    />
+                  </div>
+
+                  <div className="md:col-span-6">
+                    <label
+                      htmlFor={`stack-${project.id}`}
+                      className="type-label block uppercase text-[#707070] dark:text-[#A3A3A3]"
+                    >
+                      Verified Stack (comma separated)
+                    </label>
+                    <input
+                      id={`stack-${project.id}`}
+                      type="text"
+                      value={project.techStack.join(', ')}
+                      onChange={(e) => handleProjectTechChange(project.id, e.target.value)}
+                      className="mt-1 min-h-[40px] w-full rounded-[4px] border border-[#EAEAEA] bg-white px-3 text-xs text-[#111111] dark:border-[#222222] dark:bg-[#161616] dark:text-white"
+                    />
+                  </div>
                 </div>
               ))}
             </div>
@@ -237,7 +293,8 @@ export default function ContentSchemaPage() {
                   type="email"
                   value={content.contact.email}
                   onChange={(e) => handleEmailChange(e.target.value)}
-                  className="mt-1.5 min-h-[40px] w-full rounded-[4px] border border-[#EAEAEA] bg-white px-3 text-xs text-[#111111] dark:border-[#222222] dark:bg-[#161616] dark:text-white"
+                  placeholder="Enter your verified email address"
+                  className="mt-1.5 min-h-[40px] w-full rounded-[4px] border border-[#EAEAEA] bg-white px-3 text-xs text-[#111111] placeholder-[#707070] dark:border-[#222222] dark:bg-[#161616] dark:text-white dark:placeholder-[#8E8E8E]"
                 />
               </div>
 

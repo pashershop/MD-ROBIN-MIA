@@ -44,7 +44,7 @@ export default function HomePage() {
     <>
       <SeoHead
         title="MD ROBIN MIA | Personal Website & Digital Portfolio"
-        description="Explore the personal website of MD Robin Mia — discover projects, skills, ideas, achievements and digital experiences."
+        description="Explore the personal website of MD Robin Mia — discover skills, digital projects, milestones, and journal notes in one place."
         canonicalPath="/"
       />
 
@@ -149,7 +149,7 @@ export default function HomePage() {
                     to="/about"
                     className="group inline-flex min-h-[36px] items-center gap-2 text-xs font-semibold tracking-[0.12em] text-[#111111] uppercase hover:underline dark:text-white"
                   >
-                    <span>Full Story &amp; Vision</span>
+                    <span>About Me</span>
                     <ArrowRight
                       className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-1"
                       aria-hidden="true"
@@ -159,7 +159,7 @@ export default function HomePage() {
                     to="/achievements"
                     className="group inline-flex min-h-[36px] items-center gap-2 text-xs font-medium tracking-[0.12em] text-[#707070] uppercase transition-colors hover:text-[#111111] dark:text-[#A3A3A3] dark:hover:text-white"
                   >
-                    <span>Milestones &amp; Certificates</span>
+                    <span>Milestones &amp; Education</span>
                     <ArrowRight
                       className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-1"
                       aria-hidden="true"
@@ -178,13 +178,13 @@ export default function HomePage() {
           <Reveal>
             <SectionHeader
               number="02"
-              title="Skills & Craft."
+              title="Technology & Skills."
               action={
                 <Link
                   to="/skills"
                   className="group inline-flex min-h-[36px] items-center gap-2 text-xs font-semibold tracking-[0.12em] text-[#111111] uppercase hover:underline dark:text-white"
                 >
-                  <span>All Skills</span>
+                  <span>My Skills</span>
                   <ArrowRight
                     className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-1"
                     aria-hidden="true"
@@ -195,7 +195,7 @@ export default function HomePage() {
           </Reveal>
 
           <div className="divide-y divide-[#EAEAEA] border-b border-[#EAEAEA] dark:divide-[#222222] dark:border-[#222222]">
-            {content.skills.map((skill, idx) => (
+            {content.skills.slice(0, 6).map((skill, idx) => (
               <Reveal key={skill.id} delay={idx * 0.03}>
                 <div className="group grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-3 gap-y-2 py-5 transition-colors duration-150 hover:bg-[#F8F8F8] sm:px-4 sm:py-6 md:grid-cols-12 md:items-center md:gap-x-6 md:gap-y-0 lg:gap-x-8 dark:hover:bg-[#111111]">
                   <div className="col-start-1 row-start-1 pt-0.5 md:col-span-1 md:pt-0">
@@ -215,7 +215,7 @@ export default function HomePage() {
 
                   <div className="col-start-2 min-w-0 md:col-start-auto md:col-span-3">
                     <span className="block text-[11px] font-medium tracking-[0.11em] text-[#707070] uppercase dark:text-[#A3A3A3]">
-                      {skill.area}
+                      {skill.stage}
                     </span>
                   </div>
 
@@ -237,13 +237,13 @@ export default function HomePage() {
           <Reveal>
             <SectionHeader
               number="03"
-              title="Selected Projects."
+              title="My Projects."
               action={
                 <Link
                   to="/projects"
                   className="group inline-flex min-h-[36px] items-center gap-2 text-xs font-semibold tracking-[0.12em] text-[#111111] uppercase hover:underline dark:text-white"
                 >
-                  <span>Explore All {content.projects.length} Projects</span>
+                  <span>My Projects ({content.projects.length})</span>
                   <ArrowRight
                     className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-1"
                     aria-hidden="true"
@@ -274,13 +274,13 @@ export default function HomePage() {
           <Reveal>
             <SectionHeader
               number="04"
-              title="Journal & Notes."
+              title="My Blog & Notes."
               action={
                 <Link
                   to="/blog"
                   className="group inline-flex min-h-[36px] items-center gap-2 text-xs font-semibold tracking-[0.12em] text-[#111111] uppercase hover:underline dark:text-white"
                 >
-                  <span>All Articles</span>
+                  <span>My Blog</span>
                   <ArrowRight
                     className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-1"
                     aria-hidden="true"

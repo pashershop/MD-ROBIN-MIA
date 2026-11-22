@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { ArrowRight } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { SeoHead } from '../components/SeoHead';
 import { Reveal } from '../components/Reveal';
@@ -6,6 +7,7 @@ import { ProjectCard } from '../components/ProjectCard';
 import { ProjectDetailModal } from '../components/ProjectDetailModal';
 import {
   Button,
+  ButtonLink,
   Container,
   PageHeroHeader,
   Section,
@@ -33,9 +35,16 @@ export default function ProjectsPage() {
   return (
     <>
       <SeoHead
-        title="My Projects | MD ROBIN MIA"
-        description="Explore Vyopic, Qyopic, Comentosh, Pasher Shop, Robin LLM, and LIFEWEB — digital concepts and projects by MD Robin Mia."
+        title="Projects Showcase | MD ROBIN MIA"
+        description="Explore Vyopic, Qyopic, Comentosh, Pasher Shop, Robin LLM, and LIFEWEB — digital tools and platform concepts by MD Robin Mia."
         canonicalPath="/projects"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Projects by MD Robin Mia',
+          url: `${content.identity.canonicalBaseUrl}/projects`,
+          author: { '@id': `${content.identity.canonicalBaseUrl}/#person` },
+        }}
       />
 
       <PageHeroHeader
@@ -99,6 +108,30 @@ export default function ProjectsPage() {
               ))}
             </div>
           )}
+
+          <div className="mt-10 flex flex-col items-start justify-between gap-6 rounded-[8px] border border-[#EAEAEA] bg-white p-6 sm:mt-12 sm:flex-row sm:items-center sm:p-8 dark:border-[#222222] dark:bg-[#111111]">
+            <div className="max-w-xl">
+              <h2 className="text-lg font-semibold text-[#111111] dark:text-white">
+                Skills &amp; Collaboration
+              </h2>
+              <p className="mt-1.5 text-sm leading-relaxed text-[#707070] dark:text-[#A3A3A3]">
+                Explore the foundational digital skills supporting these concepts, or get in touch
+                about building together.
+              </p>
+            </div>
+            <div className="grid w-full grid-cols-1 gap-3 sm:flex sm:w-auto sm:flex-wrap sm:items-center">
+              <ButtonLink to="/skills" variant="secondary" className="w-full sm:w-auto">
+                View Skills
+              </ButtonLink>
+              <ButtonLink to="/contact" variant="primary" className="group w-full sm:w-auto">
+                <span>Get in Touch</span>
+                <ArrowRight
+                  className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </ButtonLink>
+            </div>
+          </div>
         </Container>
       </Section>
 

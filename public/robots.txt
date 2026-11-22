@@ -2,5 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /content-schema
 
-# Replace with your production domain when deploying
-Sitemap: https://mdrobinmia.example/sitemap.xml
+Sitemap: https://mdrobinmia.pages.dev/sitemap.xml

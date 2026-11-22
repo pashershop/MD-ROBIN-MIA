@@ -68,11 +68,33 @@ export function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps
             <p className="type-body mt-2 text-[#111111] dark:text-[#E5E5E5]">{project.overview}</p>
           </div>
 
-          <div>
+          <div className="grid grid-cols-1 gap-4 border-t border-[#EAEAEA] pt-5 sm:grid-cols-2 dark:border-[#222222]">
+            <div>
+              <h3 className="type-label uppercase text-[#707070] dark:text-[#A3A3A3]">
+                Development Progress
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#111111] dark:text-[#E5E5E5]">
+                {project.developmentProgress}
+              </p>
+            </div>
+
+            <div>
+              <h3 className="type-label uppercase text-[#707070] dark:text-[#A3A3A3]">
+                Technology Stack
+              </h3>
+              <ul className="mt-2 space-y-1 text-sm text-[#111111] dark:text-[#E5E5E5]">
+                {project.techStack.map((tech) => (
+                  <li key={tech}>{tech}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-[#EAEAEA] pt-5 dark:border-[#222222]">
             <h3 className="type-label uppercase text-[#707070] dark:text-[#A3A3A3]">
-              Key Focus Areas
+              Key Features
             </h3>
-            <ul className="mt-3 space-y-2 border-t border-[#EAEAEA] pt-3 dark:border-[#222222]">
+            <ul className="mt-3 space-y-2">
               {project.highlights.map((item, idx) => (
                 <li
                   key={item}

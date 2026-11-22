@@ -5,53 +5,53 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
     brandMark: 'MRM.',
     fullName: 'MD ROBIN MIA',
     tagline: 'THINK. CREATE. BUILD. INSPIRE.',
-    availabilityLabel: 'Open to Ideas & Collaboration',
-    heroLabel: 'HELLO, WELCOME TO MY DIGITAL SPACE',
+    availabilityLabel: 'Personal Brand & Technology',
+    heroLabel: 'PERSONAL BRAND & TECHNOLOGY',
     heroSubheading:
-      'Exploring technology, creating digital experiences and turning ideas into meaningful projects.',
+      'Exploring technology, developing digital products, learning new skills, and transforming ideas into meaningful digital experiences.',
     heroDescription:
-      'Welcome to my personal website. I am passionate about technology, creativity and building meaningful digital experiences. Here you can explore my journey, skills, projects and ideas.',
+      'Welcome to my personal digital hub. Here I document my technology interests, foundational digital skills, evolving projects, and ongoing learning journey.',
     footerDescription:
-      'Digital home, personal brand, project showcase, and journal of MD Robin Mia — exploring technology and creating meaningful digital experiences.',
+      'Personal brand, technology hub, project portfolio, and learning journal of MD Robin Mia — transforming ideas into meaningful digital experiences.',
     copyrightText: '© 2026 MD ROBIN MIA. All Rights Reserved.',
-    canonicalBaseUrl: 'https://mdrobinmia.example',
+    canonicalBaseUrl: 'https://mdrobinmia.pages.dev',
   },
   aboutIntro:
-    "Hello! I'm MD Robin Mia. I am a curious learner with an interest in technology, digital creativity and building useful things for the web.",
+    "Hello! I'm MD Robin Mia. I am a curious learner focused on technology, digital creativity, and building practical things for the web.",
   aboutSections: [
     {
       id: 'personal-introduction',
       title: 'Personal Introduction',
       content:
-        'I am MD Robin Mia — a curious learner focused on exploring modern technology, digital tools, and web experiences. This space serves as my central digital identity where ideas, learning milestones, and upcoming projects live together.',
+        'I am MD Robin Mia (MRM.) — an emerging builder and curious learner dedicated to exploring modern technology, clean design, and useful web experiences. This space serves as my central digital hub where ideas, skills, and ongoing projects live together.',
       isPlaceholder: false,
     },
     {
-      id: 'my-journey',
-      title: 'My Journey',
+      id: 'my-technology-interests',
+      title: 'My Technology Interests',
       content:
-        'Documenting my path as I explore modern web technologies, creative tools, and digital product ideas. Full timeline notes will be shared here as I grow.',
+        'My curiosity centers on practical web tools, clean user interfaces, digital image utilities, thoughtful online discussion platforms, and applied language model workflows that simplify everyday tasks.',
+      isPlaceholder: false,
+    },
+    {
+      id: 'my-learning-journey',
+      title: 'My Learning Journey',
+      content:
+        'I am building my technical foundation step by step—moving from everyday computer fluency and visual design into semantic HTML, responsive layouts, modern frontend concepts, and structured product thinking.',
       isPlaceholder: true,
-    },
-    {
-      id: 'my-interests',
-      title: 'My Interests',
-      content:
-        'Exploring practical web technologies, digital image tools, language models, clean interface design, and social platforms that prioritize thoughtful human conversation.',
-      isPlaceholder: false,
     },
     {
       id: 'my-vision',
       title: 'My Vision',
       content:
-        'Exploring how thoughtful design and practical web tools can make everyday digital experiences simpler, faster, and more useful.',
+        'To combine simplicity, intentional design, and practical technology so everyday digital products feel clearer, faster, and more human-centered.',
       isPlaceholder: true,
     },
     {
       id: 'my-goals',
       title: 'My Goals',
       content:
-        'Continuously strengthening my web development foundations while turning early product concepts into functional, real-world digital experiences.',
+        'To strengthen my web development foundations, ship real-world versions of my early project concepts, and collaborate meaningfully with curious builders and learners.',
       isPlaceholder: true,
     },
   ],
@@ -62,7 +62,7 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
       title: 'Independent Web & Digital Studies',
       institutionOrContext: 'Self-Directed Learning',
       summary:
-        'Building practical foundations in modern web structure, clean typography, responsive design systems, and everyday digital tools.',
+        'Studying modern web structure, typography, responsive design systems, and practical digital workflows through hands-on experimentation.',
       isPlaceholder: false,
     },
     {
@@ -79,38 +79,58 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
     {
       id: 'basic-computer-skills',
       name: 'Basic Computer Skills',
+      stage: 'Current Skills',
       area: 'Foundations',
       note: 'Everyday computing workflows, file organization, troubleshooting, and digital productivity.',
     },
     {
       id: 'typing',
       name: 'Typing',
-      area: 'Productivity',
+      stage: 'Current Skills',
+      area: 'Communication',
       note: 'Clear, steady written communication and structured document drafting.',
     },
     {
       id: 'canva',
       name: 'Canva',
+      stage: 'Current Skills',
       area: 'Visual Design',
       note: 'Creating clean layouts, social graphics, and minimal visual compositions.',
     },
     {
       id: 'facebook-social-media',
       name: 'Facebook & Social Media',
+      stage: 'Current Skills',
       area: 'Digital Presence',
       note: 'Managing pages, sharing updates thoughtfully, and understanding online communities.',
     },
     {
       id: 'web-development-learning',
-      name: 'Web Development (Learning)',
-      area: 'Engineering',
-      note: 'Actively learning how modern web interfaces, components, and static sites are structured and built.',
+      name: 'Web Development Fundamentals',
+      stage: 'Currently Learning',
+      area: 'Web Engineering',
+      note: 'Actively studying semantic HTML, CSS layout systems, responsive interfaces, and how static sites are built.',
     },
     {
       id: 'digital-creativity',
-      name: 'Digital Creativity',
-      area: 'Ideation',
-      note: 'Translating everyday concepts into structured digital product ideas and clean experiences.',
+      name: 'Digital Product Thinking',
+      stage: 'Currently Learning',
+      area: 'Product Design',
+      note: 'Learning to translate everyday problems into clear user flows, scopes, and clean digital prototypes.',
+    },
+    {
+      id: 'ai-language-workflows',
+      name: 'AI & Language Workflows',
+      stage: 'Areas of Interest',
+      area: 'AI Exploration',
+      note: 'Exploring how structured prompts and language models can support everyday clarity and creative tools.',
+    },
+    {
+      id: 'minimal-interface-design',
+      name: 'Minimal Interface Architecture',
+      stage: 'Areas of Interest',
+      area: 'UI & Editorial',
+      note: 'Studying Swiss editorial typography, whitespace balance, and distraction-free monochrome systems.',
     },
   ],
   projects: [
@@ -130,6 +150,8 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
         'Minimalist black-and-white workspace',
         'Browser-first accessibility without heavy installs',
       ],
+      techStack: ['HTML / CSS / JavaScript (Learning)', 'Browser UI Prototype'],
+      developmentProgress: 'Early UI exploration and core tool scoping',
     },
     {
       id: 'qyopic',
@@ -147,6 +169,8 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
         'Clean metadata presentation',
         'Built for lightweight image discovery',
       ],
+      techStack: ['To be finalized (Concept Stage)'],
+      developmentProgress: 'Concept definition and visual layout planning',
     },
     {
       id: 'comentosh',
@@ -164,6 +188,8 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
         'Distraction-free reading and reply threads',
         'Focus on meaningful community discussion',
       ],
+      techStack: ['Web Interface Design', 'Frontend Prototype (Learning)'],
+      developmentProgress: 'Information architecture and discussion thread design',
     },
     {
       id: 'pasher-shop',
@@ -181,6 +207,8 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
         'Clear product and location visibility',
         'Designed to support small local businesses',
       ],
+      techStack: ['To be finalized (Concept Stage)'],
+      developmentProgress: 'Problem framing and neighborhood directory structure',
     },
     {
       id: 'robin-llm',
@@ -196,8 +224,10 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
       highlights: [
         'Structured experimentation with language tasks',
         'Focus on clear, practical human utility',
-        'Iterative learning notebook and prototype',
+        'Iterative learning notebook and workflow study',
       ],
+      techStack: ['Prompt Architecture Exploration', 'AI Workflow Research'],
+      developmentProgress: 'Ongoing prompt design and practical use-case testing',
     },
     {
       id: 'lifeweb',
@@ -215,6 +245,8 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
         'Minimalist Swiss-inspired interface architecture',
         'Long-term modular web platform vision',
       ],
+      techStack: ['To be finalized (Planned Architecture)'],
+      developmentProgress: 'Long-term modular vision and ecosystem roadmap',
     },
   ],
   achievements: [
@@ -225,7 +257,7 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
       issuerOrContext: 'Personal Initiative',
       dateLabel: '2026',
       description:
-        'Established a unified personal website architecture to document ideas, learning progress, and upcoming digital projects.',
+        'Established a unified personal website architecture to document ideas, technology interests, learning progress, and upcoming digital projects.',
       isPlaceholder: false,
     },
     {
@@ -271,7 +303,7 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
         'Choosing a strict black-and-white palette shifts full attention to the words, ideas, and projects themselves. Without bright gradients competing for attention, every heading, project card, and paragraph carries deliberate weight.',
         'As I continue learning web development and shaping concepts like Vyopic, Comentosh, and LIFEWEB, this journal will evolve into a living notebook for real lessons learned along the way.',
       ],
-      category: 'Personal Thoughts',
+      category: 'Digital Projects',
       publishDate: '2026-11-10',
       readingTimeMinutes: 3,
       featured: true,
@@ -303,7 +335,7 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
         'Technology becomes meaningful when it reduces friction rather than adding confusion. Whether exploring photo utilities or language models, the central question remains simple: does this help someone think, create, or finish a task more clearly?',
         'Projects like Robin LLM start as curiosity-driven explorations—testing how structured prompts and clean interfaces can turn complex capability into simple, reliable tools.',
       ],
-      category: 'AI & Innovation',
+      category: 'AI & Machine Learning',
       publishDate: '2026-10-28',
       readingTimeMinutes: 3,
       featured: false,
@@ -317,9 +349,9 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
         'A straightforward framework for documenting a project name, purpose, category, and realistic status.',
       content: [
         'Every digital product starts as a short note. Before writing complex code or designing dozens of screens, writing down four simple fields—Name, One-Line Purpose, Category, and Honest Status—keeps expectations grounded.',
-        'Separating projects into Planned, In Development, and Live makes it easy for visitors to understand what exists today and what is actively taking shape.',
+        'Separating projects into Planned, Concept, In Development, and Live makes it easy for visitors to understand what exists today and what is actively taking shape.',
       ],
-      category: 'Tutorials',
+      category: 'Learning Journey',
       publishDate: '2026-10-19',
       readingTimeMinutes: 3,
       featured: false,
@@ -344,15 +376,15 @@ export const DEFAULT_SITE_CONTENT: SiteContentData = {
   contact: {
     heading: "Let's Connect",
     description: 'Have an idea, a question or want to collaborate? Feel free to get in touch.',
-    email: 'contact@mdrobinmia.example',
+    email: '',
     emailIsPlaceholder: true,
     socialLinks: [
       {
         id: 'email',
         platform: 'Email',
         label: 'Direct Email',
-        url: 'mailto:contact@mdrobinmia.example',
-        placeholderNote: 'Direct email contact',
+        url: null,
+        placeholderNote: 'Email address coming soon',
       },
       {
         id: 'facebook',
