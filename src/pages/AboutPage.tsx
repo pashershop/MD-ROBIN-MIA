@@ -98,6 +98,44 @@ export default function AboutPage() {
         </Container>
       </Section>
 
+      {content.experiences && content.experiences.length > 0 && (
+        <Section surface="white">
+          <Container>
+            <Reveal>
+              <SectionHeader number="02B" title="Experience." />
+            </Reveal>
+
+            <div className="divide-y divide-[#EAEAEA] border-b border-[#EAEAEA] dark:divide-[#222222] dark:border-[#222222]">
+              {content.experiences.map((exp, idx) => (
+                <Reveal key={exp.id} delay={idx * 0.04}>
+                  <article className="grid grid-cols-1 gap-3 py-7 sm:gap-6 sm:py-9 md:grid-cols-12 md:gap-8">
+                    <div className="md:col-span-5">
+                      <p className="font-mono-tabular text-xs font-medium tracking-wider text-[#111111] uppercase dark:text-white">
+                        {exp.period}
+                      </p>
+                      <p className="mt-1 text-sm font-medium text-[#707070] dark:text-[#A3A3A3]">
+                        {exp.organization}
+                        {exp.location ? ` · ${exp.location}` : ''}
+                      </p>
+                    </div>
+                    <div className="md:col-span-7">
+                      <h3 className="text-lg font-semibold tracking-tight text-[#000000] sm:text-xl dark:text-white">
+                        {exp.roleTitle}
+                      </h3>
+                      {exp.summary && (
+                        <p className="mt-2.5 max-w-[65ch] text-[15px] leading-[1.75] text-[#707070] sm:text-base dark:text-[#A3A3A3]">
+                          {exp.summary}
+                        </p>
+                      )}
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
+
       {/* Minimal Personal Milestones Timeline */}
       <Section surface="muted">
         <Container>

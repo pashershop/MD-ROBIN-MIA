@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { ArrowRight, ArrowUpRight, Check, Copy, Mail } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
+import { apiClient, ApiError } from '../services/apiClient';
 import { SeoHead } from '../components/SeoHead';
 import {
   Button,
@@ -19,7 +20,7 @@ interface FormState {
 }
 
 export default function ContactPage() {
-  const { content } = useSite();
+  const { content, cmsSource } = useSite();
 
   const [challenge] = useState(() => {
     const a = 3;
@@ -36,7 +37,9 @@ export default function ContactPage() {
     humanAnswer: '',
   });
 
+  const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [serverConfirmation, setServerConfirmation] = useState<string | null>(null);
   const [preparedDraft, setPreparedDraft] = useState<{
     mailtoHref: string;
     formattedText: string;
@@ -67,9 +70,10 @@ export default function ContactPage() {
 
   const emailRegex = useMemo(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
+    setServerConfirmation(null);
     setPreparedDraft(null);
 
     if (form.honeypot.trim() !== '') {
@@ -110,12 +114,45 @@ export default function ContactPage() {
         )}&body=${encodeURIComponent(formattedBody)}`
       : '';
 
-    setPreparedDraft({
+    const draftObj = {
       mailtoHref,
       formattedText: `${
         hasConfiguredEmail ? `To: ${content.contact.email.trim()}\n` : ''
       }Subject: ${form.subject.trim()}\n\n${formattedBody}`,
-    });
+    };
+
+    if (cmsSource === 'api') {
+      setSubmitting(true);
+      try {
+        const res = await apiClient.submitContactMessage({
+          fullName: form.fullName.trim(),
+          email: form.email.trim(),
+          subject: form.subject.trim(),
+          message: form.message.trim(),
+          honeypot: form.honeypot,
+        });
+        setServerConfirmation(res.message);
+        setForm({
+          fullName: '',
+          email: '',
+          subject: '',
+          message: '',
+          honeypot: '',
+          humanAnswer: '',
+        });
+        return;
+      } catch (err) {
+        if (err instanceof ApiError && !err.isNetworkError) {
+          setErrorMsg(err.message);
+          return;
+        }
+        // If backend became unreachable mid-session, fall back transparently to local draft preparation
+      } finally {
+        setSubmitting(false);
+      }
+    }
+
+    setPreparedDraft(draftObj);
   };
 
   const hasEmail = content.contact.email.trim().length > 0;
@@ -246,8 +283,9 @@ export default function ContactPage() {
               <div className="rounded-[8px] border border-[#EAEAEA] bg-white p-6 sm:p-8 lg:p-10 dark:border-[#222222] dark:bg-[#111111]">
                 <h2 className="type-subheading text-[#000000] dark:text-white">Send a Message</h2>
                 <p className="mt-2 text-xs leading-relaxed text-[#707070] dark:text-[#A3A3A3]">
-                  Prepare your inquiry below. Validating this form builds a ready-to-send email
-                  draft for your mail client without transmitting data automatically.
+                  {cmsSource === 'api'
+                    ? 'Send an inquiry directly to the site inbox. Spam protection and rate limiting are enforced.'
+                    : 'Prepare your inquiry below. Validating this form builds a ready-to-send email draft for your mail client without transmitting data automatically.'}
                 </p>
 
                 <form onSubmit={handleSubmit} noValidate className="mt-8 space-y-6">
@@ -362,7 +400,19 @@ export default function ContactPage() {
                       role="alert"
                       className="rounded-[8px] border border-[#111111] bg-[#F8F8F8] px-4 py-3 text-sm font-medium text-[#111111] dark:border-white dark:bg-[#1A1A1A] dark:text-white"
                     >
-                      Validation Error: {errorMsg}
+                      {errorMsg}
+                    </div>
+                  )}
+
+                  {serverConfirmation && (
+                    <div
+                      role="status"
+                      className="rounded-[8px] border border-[#111111] bg-[#F8F8F8] p-5 text-sm text-[#111111] dark:border-white dark:bg-[#1A1A1A] dark:text-white"
+                    >
+                      <p className="font-semibold">Message Received</p>
+                      <p className="mt-1.5 text-xs leading-relaxed text-[#707070] dark:text-[#A3A3A3]">
+                        {serverConfirmation}
+                      </p>
                     </div>
                   )}
 
@@ -406,15 +456,26 @@ export default function ContactPage() {
                   )}
 
                   <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap sm:items-center">
-                    <Button type="submit" variant="primary" className="group w-full sm:w-auto">
-                      <span>Prepare Message</span>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      disabled={submitting}
+                      className="group w-full sm:w-auto disabled:opacity-60"
+                    >
+                      <span>
+                        {submitting
+                          ? 'Sending...'
+                          : cmsSource === 'api'
+                            ? 'Send Message'
+                            : 'Prepare Message'}
+                      </span>
                       <ArrowRight
                         className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-1"
                         aria-hidden="true"
                       />
                     </Button>
 
-                    {(form.fullName || form.email || form.subject || form.message || preparedDraft) && (
+                    {(form.fullName || form.email || form.subject || form.message || preparedDraft || serverConfirmation) && (
                       <Button
                         type="button"
                         variant="outline"
@@ -429,6 +490,7 @@ export default function ContactPage() {
                             humanAnswer: '',
                           });
                           setErrorMsg(null);
+                          setServerConfirmation(null);
                           setPreparedDraft(null);
                         }}
                       >

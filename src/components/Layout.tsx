@@ -1,17 +1,43 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';
+import { useSite } from '../context/SiteContext';
+import { apiClient } from '../services/apiClient';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { BackToTop } from './BackToTop';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
+  const { cmsSource } = useSite();
   const shouldReduceMotion = useReducedMotion();
+  const isAdminRoute = pathname.startsWith('/admin');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  useEffect(() => {
+    if (isAdminRoute || pathname.startsWith('/content-schema') || cmsSource !== 'api') return;
+    let contentType = 'page';
+    let contentSlug = pathname.replace(/^\//, '') || 'home';
+    if (pathname.startsWith('/projects/')) {
+      contentType = 'project';
+      contentSlug = pathname.replace('/projects/', '');
+    } else if (pathname.startsWith('/blog/')) {
+      contentType = 'blog';
+      contentSlug = pathname.replace('/blog/', '');
+    }
+    apiClient.trackPageView(pathname, contentType, contentSlug);
+  }, [pathname, isAdminRoute, cmsSource]);
+
+  if (isAdminRoute) {
+    return (
+      <div className="min-h-screen bg-white text-[#111111] transition-colors duration-200 dark:bg-[#050505] dark:text-white">
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen flex-col bg-white text-[#111111] transition-colors duration-200 dark:bg-[#050505] dark:text-white">

@@ -83,59 +83,83 @@ export default function AchievementsPage() {
 
       <Section surface="muted">
         <Container>
-          <div className="relative border-l border-[#EAEAEA] pl-6 sm:pl-10 dark:border-[#222222]">
-            <div className="space-y-6 sm:space-y-8">
-              {items.map((item, idx) => (
-                <Reveal key={item.id} delay={idx * 0.04}>
-                  <article className="relative rounded-[8px] border border-[#EAEAEA] bg-white p-6 transition-colors duration-150 hover:border-[#111111] sm:p-8 dark:border-[#222222] dark:bg-[#111111] dark:hover:border-white">
-                    <span
-                      aria-hidden="true"
-                      className="absolute top-8 -left-[30px] h-2.5 w-2.5 rounded-[2px] border border-[#111111] bg-white sm:-left-[46px] dark:border-white dark:bg-[#0D0D0D]"
-                    />
+          {items.length === 0 ? (
+            <div className="rounded-[8px] border border-[#EAEAEA] bg-white p-8 text-center sm:p-12 dark:border-[#222222] dark:bg-[#111111]">
+              <p className="text-lg font-semibold text-[#111111] dark:text-white">
+                No verified records in &ldquo;{selectedGroup}&rdquo; yet.
+              </p>
+              <p className="mt-2 text-sm text-[#707070] dark:text-[#A3A3A3]">
+                Only verified milestones, academic records, and earned certificates are published
+                here.
+              </p>
+            </div>
+          ) : (
+            <div className="relative border-l border-[#EAEAEA] pl-6 sm:pl-10 dark:border-[#222222]">
+              <div className="space-y-6 sm:space-y-8">
+                {items.map((item, idx) => (
+                  <Reveal key={item.id} delay={idx * 0.04}>
+                    <article className="relative rounded-[8px] border border-[#EAEAEA] bg-white p-6 transition-colors duration-150 hover:border-[#111111] sm:p-8 dark:border-[#222222] dark:bg-[#111111] dark:hover:border-white">
+                      <span
+                        aria-hidden="true"
+                        className="absolute top-8 -left-[30px] h-2.5 w-2.5 rounded-[2px] border border-[#111111] bg-white sm:-left-[46px] dark:border-white dark:bg-[#0D0D0D]"
+                      />
 
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
-                      <div className="md:col-span-3">
-                        <time className="font-mono-tabular text-xs font-medium tracking-wider text-[#111111] uppercase dark:text-white">
-                          {item.dateLabel}
-                        </time>
-                        <p className="mt-1 text-xs text-[#707070] dark:text-[#A3A3A3]">
-                          {item.group}
-                        </p>
-                      </div>
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
+                        <div className="md:col-span-3">
+                          <time className="font-mono-tabular text-xs font-medium tracking-wider text-[#111111] uppercase dark:text-white">
+                            {item.dateLabel}
+                          </time>
+                          <p className="mt-1 text-xs text-[#707070] dark:text-[#A3A3A3]">
+                            {item.group}
+                          </p>
+                        </div>
 
-                      <div className="md:col-span-9">
-                        <h2 className="type-subheading text-[#000000] dark:text-white">
-                          {item.title}
-                        </h2>
-                        <p className="mt-1 text-sm font-medium text-[#707070] dark:text-[#A3A3A3]">
-                          {item.issuerOrContext}
-                        </p>
-                        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#707070] dark:text-[#A3A3A3]">
-                          {item.description}
-                        </p>
+                        <div className="md:col-span-9">
+                          <h2 className="type-subheading text-[#000000] dark:text-white">
+                            {item.title}
+                          </h2>
+                          <p className="mt-1 text-sm font-medium text-[#707070] dark:text-[#A3A3A3]">
+                            {item.issuerOrContext}
+                          </p>
+                          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#707070] dark:text-[#A3A3A3]">
+                            {item.description}
+                          </p>
 
-                        <div className="mt-5 border-t border-[#EAEAEA] pt-4 dark:border-[#222222]">
-                          <button
-                            type="button"
-                            onClick={() => setPreviewItem(item)}
-                            className="inline-flex min-h-[38px] items-center gap-2 text-xs font-semibold tracking-wider text-[#111111] uppercase hover:underline dark:text-white"
-                          >
-                            <FileText className="h-3.5 w-3.5" aria-hidden="true" />
-                            <span>
-                              {item.group === 'Certificates Showcase'
-                                ? 'Certificate Preview'
-                                : 'View Details'}
-                            </span>
-                            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-                          </button>
+                          <div className="mt-5 flex flex-wrap items-center gap-5 border-t border-[#EAEAEA] pt-4 dark:border-[#222222]">
+                            <button
+                              type="button"
+                              onClick={() => setPreviewItem(item)}
+                              className="inline-flex min-h-[38px] items-center gap-2 text-xs font-semibold tracking-wider text-[#111111] uppercase hover:underline dark:text-white"
+                            >
+                              <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+                              <span>
+                                {item.group === 'Certificates Showcase'
+                                  ? 'Certificate Preview'
+                                  : 'View Details'}
+                              </span>
+                              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                            </button>
+
+                            {item.credentialUrl && (
+                              <a
+                                href={item.credentialUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex min-h-[38px] items-center gap-1.5 text-xs font-medium tracking-wider text-[#707070] uppercase hover:text-[#111111] dark:text-[#A3A3A3] dark:hover:text-white"
+                              >
+                                <span>Verify Credential</span>
+                                <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                              </a>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </article>
-                </Reveal>
-              ))}
+                    </article>
+                  </Reveal>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="mt-10 flex flex-col items-start justify-between gap-6 rounded-[8px] border border-[#EAEAEA] bg-white p-6 sm:mt-12 sm:flex-row sm:items-center sm:p-8 dark:border-[#222222] dark:bg-[#111111]">
             <div>

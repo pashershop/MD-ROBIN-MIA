@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import type { ProjectItem } from '../types/content';
 
@@ -17,6 +19,7 @@ export function ProjectCard({
   const Heading = headingTag;
   const formattedNumber = String(index + 1).padStart(2, '0');
   const hasLiveUrl = Boolean(project.websiteUrl);
+  const [imgFailed, setImgFailed] = useState(false);
 
   return (
     <article className="group flex h-full flex-col justify-between rounded-[8px] border border-[#EAEAEA] bg-white p-5 transition-[transform,border-color] duration-200 hover:border-[#111111] sm:p-7 md:hover:-translate-y-0.5 dark:border-[#222222] dark:bg-[#111111] dark:hover:border-white">
@@ -35,8 +38,25 @@ export function ProjectCard({
           </span>
         </div>
 
+        {project.coverImageUrl && !imgFailed && (
+          <Link
+            to={`/projects/${project.slug}`}
+            className="mt-4 block overflow-hidden rounded-[6px] border border-[#EAEAEA] bg-[#F8F8F8] dark:border-[#222222] dark:bg-[#161616]"
+          >
+            <img
+              src={project.coverImageUrl}
+              alt={`${project.name} preview`}
+              referrerPolicy="no-referrer"
+              onError={() => setImgFailed(true)}
+              className="aspect-[16/9] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+          </Link>
+        )}
+
         <Heading className="mt-5 text-xl font-semibold tracking-[-0.02em] text-[#000000] sm:mt-6 sm:text-2xl dark:text-white">
-          {project.name}
+          <Link to={`/projects/${project.slug}`} className="hover:underline">
+            {project.name}
+          </Link>
         </Heading>
 
         <p className="mt-1.5 text-sm font-medium text-[#111111] dark:text-[#E5E5E5]">
@@ -83,15 +103,22 @@ export function ProjectCard({
               onClick={() => onSelect(project)}
               className="inline-flex min-h-[44px] items-center gap-1.5 text-xs font-medium tracking-[0.1em] text-[#707070] uppercase transition-colors hover:text-[#111111] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111111] dark:text-[#A3A3A3] dark:hover:text-white dark:focus-visible:outline-white"
             >
-              <span>Case Study</span>
+              <span>Quick View</span>
               <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
             </button>
           </>
         ) : (
           <>
-            <span className="text-xs font-medium text-[#707070] dark:text-[#A3A3A3]">
-              Not Yet Launched
-            </span>
+            <Link
+              to={`/projects/${project.slug}`}
+              className="inline-flex min-h-[44px] items-center gap-1.5 text-xs font-semibold tracking-[0.1em] text-[#111111] uppercase hover:underline whitespace-nowrap shrink-0 dark:text-white"
+            >
+              <span>Project Page</span>
+              <ArrowRight
+                className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+                aria-hidden="true"
+              />
+            </Link>
 
             <button
               type="button"
@@ -99,10 +126,6 @@ export function ProjectCard({
               className="inline-flex min-h-[44px] items-center gap-1.5 rounded-[4px] border border-[#EAEAEA] px-3.5 py-2 text-xs font-medium tracking-[0.1em] text-[#111111] uppercase transition-colors hover:border-[#111111] whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111111] dark:border-[#222222] dark:text-white dark:hover:border-white dark:focus-visible:outline-white"
             >
               <span>Case Study</span>
-              <ArrowRight
-                className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
-                aria-hidden="true"
-              />
             </button>
           </>
         )}

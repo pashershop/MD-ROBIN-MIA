@@ -334,6 +334,69 @@ export default function HomePage() {
         </Container>
       </Section>
 
+      {/* Optional Services (only rendered when published in CMS) */}
+      {content.services && content.services.length > 0 && (
+        <Section surface="muted">
+          <Container>
+            <Reveal>
+              <SectionHeader number="05" title="Collaboration & Services." />
+            </Reveal>
+            <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-8">
+              {content.services.map((srv) => (
+                <article
+                  key={srv.id}
+                  className="rounded-[8px] border border-[#EAEAEA] bg-white p-6 sm:p-8 dark:border-[#222222] dark:bg-[#111111]"
+                >
+                  <h3 className="text-lg font-semibold text-[#000000] dark:text-white">
+                    {srv.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[#707070] dark:text-[#A3A3A3]">
+                    {srv.shortDescription}
+                  </p>
+                  {srv.deliverables.length > 0 && (
+                    <ul className="mt-4 space-y-1.5 border-t border-[#EAEAEA] pt-4 text-xs text-[#111111] dark:border-[#222222] dark:text-[#E5E5E5]">
+                      {srv.deliverables.map((d) => (
+                        <li key={d}>{d}</li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
+
+      {/* Optional Testimonials (only rendered when approved and published in CMS) */}
+      {content.testimonials && content.testimonials.length > 0 && (
+        <Section surface="white">
+          <Container>
+            <Reveal>
+              <SectionHeader number="06" title="Endorsements." />
+            </Reveal>
+            <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-8">
+              {content.testimonials.map((tm) => (
+                <blockquote
+                  key={tm.id}
+                  className="rounded-[8px] border border-[#EAEAEA] bg-[#F8F8F8] p-6 sm:p-8 dark:border-[#222222] dark:bg-[#111111]"
+                >
+                  <p className="text-sm leading-relaxed text-[#111111] sm:text-base dark:text-[#EAEAEA]">
+                    &ldquo;{tm.quote}&rdquo;
+                  </p>
+                  <footer className="mt-4 border-t border-[#EAEAEA] pt-4 text-xs text-[#707070] dark:border-[#222222] dark:text-[#A3A3A3]">
+                    <span className="font-semibold text-[#111111] dark:text-white">
+                      {tm.authorName}
+                    </span>{' '}
+                    — {tm.authorRole}
+                    {tm.organization ? `, ${tm.organization}` : ''}
+                  </footer>
+                </blockquote>
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
+
       {/* Contact CTA Section */}
       <Section surface="dark">
         <Container>

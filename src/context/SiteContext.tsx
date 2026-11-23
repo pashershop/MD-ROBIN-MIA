@@ -1,13 +1,15 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import {
-  loadSiteContent,
-  saveLocalDraftContent,
-  resetLocalDraftContent,
   hasLocalDraftOverrides,
+  loadSiteContent,
+  resetLocalDraftContent,
+  saveLocalDraftContent,
 } from '../services/contentProvider';
+import { apiClient } from '../services/apiClient';
 import type { SiteContentData } from '../types/content';
 
 type ThemeMode = 'light' | 'dark';
+export type CmsSource = 'api' | 'static-fallback';
 
 interface SiteContextValue {
   theme: ThemeMode;
@@ -16,6 +18,9 @@ interface SiteContextValue {
   updateContent: (next: SiteContentData) => void;
   resetContent: () => void;
   hasDraft: boolean;
+  cmsSource: CmsSource;
+  isCmsLoading: boolean;
+  refreshContent: () => Promise<void>;
 }
 
 const SiteContext = createContext<SiteContextValue | undefined>(undefined);
@@ -40,6 +45,28 @@ export function SiteProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
   const [content, setContent] = useState<SiteContentData>(() => loadSiteContent());
   const [hasDraft, setHasDraft] = useState<boolean>(() => hasLocalDraftOverrides());
+  const [cmsSource, setCmsSource] = useState<CmsSource>('static-fallback');
+  const [isCmsLoading, setIsCmsLoading] = useState<boolean>(true);
+
+  const refreshContent = useCallback(async () => {
+    setIsCmsLoading(true);
+    try {
+      const res = await apiClient.fetchPublicBootstrap();
+      if (res.ok && res.data) {
+        setContent(res.data);
+        setCmsSource('api');
+      }
+    } catch {
+      // Static preview fallback remains active when Worker API is unreachable or unbound
+      setCmsSource('static-fallback');
+    } finally {
+      setIsCmsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void refreshContent();
+  }, [refreshContent]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -80,6 +107,9 @@ export function SiteProvider({ children }: { children: React.ReactNode }) {
         updateContent,
         resetContent,
         hasDraft,
+        cmsSource,
+        isCmsLoading,
+        refreshContent,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { ArrowRight, Check, Search, Share2 } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { SeoHead } from '../components/SeoHead';
@@ -13,7 +13,7 @@ import {
 } from '../components/ui/DesignSystem';
 import type { BlogCategory } from '../types/content';
 
-const CATEGORIES: Array<'All' | BlogCategory> = [
+const DEFAULT_CATEGORIES: Array<'All' | BlogCategory> = [
   'All',
   'Technology',
   'Web Development',
@@ -23,10 +23,33 @@ const CATEGORIES: Array<'All' | BlogCategory> = [
 ];
 
 export default function BlogPage() {
+  const { categorySlug } = useParams<{ categorySlug?: string }>();
   const { content } = useSite();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<'All' | BlogCategory>('All');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const categories = useMemo(() => {
+    if (content.blogCategories && content.blogCategories.length > 0) {
+      return ['All', ...content.blogCategories.map((c) => c.name)];
+    }
+    return DEFAULT_CATEGORIES;
+  }, [content.blogCategories]);
+
+  useEffect(() => {
+    if (!categorySlug) {
+      setActiveCategory('All');
+      return;
+    }
+    const matched = content.blogCategories?.find((c) => c.slug === categorySlug);
+    if (matched) {
+      setActiveCategory(matched.name);
+      return;
+    }
+    const normalized = categorySlug.replace(/-/g, ' ').toLowerCase();
+    const fallbackMatch = categories.find((c) => c.toLowerCase() === normalized);
+    if (fallbackMatch) setActiveCategory(fallbackMatch);
+  }, [categorySlug, content.blogCategories, categories]);
 
   const featuredPost = useMemo(
     () => content.blogPosts.find((p) => p.featured) ?? content.blogPosts[0],
@@ -40,6 +63,7 @@ export default function BlogPage() {
       const matchesQuery =
         !q ||
         post.title.toLowerCase().includes(q) ||
+        (post.titleBn || '').toLowerCase().includes(q) ||
         post.excerpt.toLowerCase().includes(q) ||
         post.category.toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
@@ -106,7 +130,7 @@ export default function BlogPage() {
             aria-label="Filter articles by category"
             className="flex max-w-full flex-wrap items-center gap-1 rounded-[4px] border border-[#EAEAEA] bg-[#F8F8F8] p-1 dark:border-[#222222] dark:bg-[#111111]"
           >
-            {CATEGORIES.map((category) => {
+            {categories.map((category) => {
               const active = activeCategory === category;
               return (
                 <button

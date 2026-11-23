@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
+  "name": "mrm-cms-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "vars": {
+    "ALLOWED_ORIGINS": "https://mdrobinmia.pages.dev,http://localhost:3000,http://127.0.0.1:3000",
+    "CANONICAL_SITE_URL": "https://mdrobinmia.pages.dev",
+    "COOKIE_SAMESITE": "Lax"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mrm-cms-db",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "migrations_dir": "../migrations"
+    }
+  ]
+  // Optional Cloudflare R2 bucket for direct image uploads from Media Library.
+  // Uncomment and create bucket (`npx wrangler r2 bucket create mrm-cms-media`) when ready:
+  // "r2_buckets": [
+  //   {
+  //     "binding": "MEDIA_BUCKET",
+  //     "bucket_name": "mrm-cms-media"
+  //   }
+  // ]
+  // CRITICAL: Never put ADMIN_BOOTSTRAP_SECRET here. Set it via CLI:
+  // npx wrangler secret put ADMIN_BOOTSTRAP_SECRET
+}

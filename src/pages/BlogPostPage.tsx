@@ -3,12 +3,14 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Check, Copy, Share2 } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { SeoHead } from '../components/SeoHead';
+import { MarkdownRenderer } from '../components/MarkdownRenderer';
 import { ButtonLink, Container, Section } from '../components/ui/DesignSystem';
 
 export default function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
   const { content } = useSite();
   const [copied, setCopied] = useState(false);
+  const [readingLang, setReadingLang] = useState<'en' | 'bn'>('en');
 
   const post = content.blogPosts.find((item) => item.slug === slug);
 
@@ -41,6 +43,18 @@ export default function BlogPostPage() {
     );
   }
 
+  const hasBengali = Boolean(post.contentMarkdownBn && post.contentMarkdownBn.trim());
+  const hasEnglish = Boolean((post.contentMarkdown && post.contentMarkdown.trim()) || post.content.length > 0);
+  const activeLang: 'en' | 'bn' =
+    post.language === 'bn' && !hasEnglish ? 'bn' : readingLang === 'bn' && hasBengali ? 'bn' : 'en';
+
+  const displayTitle = activeLang === 'bn' && post.titleBn ? post.titleBn : post.title;
+  const displayExcerpt = activeLang === 'bn' && post.excerptBn ? post.excerptBn : post.excerpt;
+  const displayMarkdown =
+    activeLang === 'bn' && post.contentMarkdownBn
+      ? post.contentMarkdownBn
+      : post.contentMarkdown || post.content.join('\n\n');
+
   const baseUrl = content.identity.canonicalBaseUrl.replace(/\/+$/, '');
   const canonicalPostUrl = `${baseUrl}/blog/${post.slug}`;
   const shareUrl =
@@ -65,8 +79,8 @@ export default function BlogPostPage() {
     }
     try {
       await navigator.share({
-        title: post.title,
-        text: post.excerpt,
+        title: displayTitle,
+        text: displayExcerpt,
         url: shareUrl,
       });
     } catch {
@@ -75,15 +89,15 @@ export default function BlogPostPage() {
   };
 
   const encodedUrl = encodeURIComponent(shareUrl);
-  const encodedTitle = encodeURIComponent(post.title);
+  const encodedTitle = encodeURIComponent(displayTitle);
 
   const relatedPosts = content.blogPosts.filter((item) => item.id !== post.id).slice(0, 2);
 
   return (
     <>
       <SeoHead
-        title={`${post.title} | MD ROBIN MIA`}
-        description={post.excerpt}
+        title={post.seoTitle || `${post.title} | MD ROBIN MIA`}
+        description={post.seoDescription || post.excerpt}
         canonicalPath={`/blog/${post.slug}`}
         ogType="article"
         structuredData={{
@@ -93,6 +107,7 @@ export default function BlogPostPage() {
           description: post.excerpt,
           datePublished: post.publishDate,
           articleSection: post.category,
+          inLanguage: post.language || 'en',
           url: canonicalPostUrl,
           mainEntityOfPage: canonicalPostUrl,
           author: { '@id': `${baseUrl}/#person` },
@@ -101,16 +116,49 @@ export default function BlogPostPage() {
 
       <article className="bg-white py-12 sm:py-16 lg:py-24 dark:bg-[#050505]">
         <div className="mx-auto max-w-[68ch] px-5 sm:px-6">
-          <Link
-            to="/blog"
-            className="group inline-flex items-center gap-2 text-xs font-semibold tracking-widest text-[#707070] uppercase transition-colors hover:text-[#111111] dark:text-[#A3A3A3] dark:hover:text-white"
-          >
-            <ArrowLeft
-              className="h-3.5 w-3.5 transition-transform duration-150 group-hover:-translate-x-1"
-              aria-hidden="true"
-            />
-            <span>Back to Blog</span>
-          </Link>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <Link
+              to="/blog"
+              className="group inline-flex items-center gap-2 text-xs font-semibold tracking-widest text-[#707070] uppercase transition-colors hover:text-[#111111] dark:text-[#A3A3A3] dark:hover:text-white"
+            >
+              <ArrowLeft
+                className="h-3.5 w-3.5 transition-transform duration-150 group-hover:-translate-x-1"
+                aria-hidden="true"
+              />
+              <span>Back to Blog</span>
+            </Link>
+
+            {hasEnglish && hasBengali && (
+              <div
+                role="group"
+                aria-label="Article language"
+                className="inline-flex items-center gap-1 rounded-[4px] border border-[#EAEAEA] bg-[#F8F8F8] p-1 dark:border-[#222222] dark:bg-[#111111]"
+              >
+                <button
+                  type="button"
+                  onClick={() => setReadingLang('en')}
+                  className={`rounded-[4px] px-3 py-1 text-xs font-medium transition-colors ${
+                    activeLang === 'en'
+                      ? 'bg-[#111111] text-white dark:bg-white dark:text-[#111111]'
+                      : 'text-[#707070] hover:text-[#111111] dark:text-[#A3A3A3] dark:hover:text-white'
+                  }`}
+                >
+                  English
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setReadingLang('bn')}
+                  className={`rounded-[4px] px-3 py-1 text-xs font-medium transition-colors ${
+                    activeLang === 'bn'
+                      ? 'bg-[#111111] text-white dark:bg-white dark:text-[#111111]'
+                      : 'text-[#707070] hover:text-[#111111] dark:text-[#A3A3A3] dark:hover:text-white'
+                  }`}
+                >
+                  বাংলা
+                </button>
+              </div>
+            )}
+          </div>
 
           <header className="mt-8 border-b border-[#EAEAEA] pb-8 sm:mt-10 sm:pb-10 dark:border-[#222222]">
             <div className="flex flex-wrap items-center gap-2 text-xs text-[#707070] dark:text-[#A3A3A3]">
@@ -121,20 +169,47 @@ export default function BlogPostPage() {
               </time>
               <span aria-hidden="true">·</span>
               <span className="font-mono-tabular">{post.readingTimeMinutes} min read</span>
+              {post.authorName && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span>{post.authorName}</span>
+                </>
+              )}
             </div>
 
             <h1 className="type-section mt-5 text-[#000000] text-balance dark:text-white">
-              {post.title}
+              {displayTitle}
             </h1>
 
-            <p className="type-body mt-5 text-[#707070] dark:text-[#A3A3A3]">{post.excerpt}</p>
+            <p className="type-body mt-5 text-[#707070] dark:text-[#A3A3A3]">{displayExcerpt}</p>
           </header>
 
-          <div className="mt-10 space-y-6 text-base leading-[1.8] text-[#111111] sm:text-lg dark:text-[#E5E5E5]">
-            {post.content.map((paragraph, idx) => (
-              <p key={idx}>{paragraph}</p>
-            ))}
+          {post.coverImageUrl && (
+            <div className="mt-8 overflow-hidden rounded-[8px] border border-[#EAEAEA] bg-[#F8F8F8] dark:border-[#222222] dark:bg-[#111111]">
+              <img
+                src={post.coverImageUrl}
+                alt={`${displayTitle} cover`}
+                referrerPolicy="no-referrer"
+                className="aspect-[16/9] w-full object-cover"
+              />
+            </div>
+          )}
+
+          <div className="mt-10 text-base text-[#111111] sm:text-lg dark:text-[#E5E5E5]">
+            <MarkdownRenderer markdown={displayMarkdown} />
           </div>
+
+          {post.tags && post.tags.length > 0 && (
+            <div className="mt-10 flex flex-wrap items-center gap-2 text-xs text-[#707070] dark:text-[#A3A3A3]">
+              <span className="font-medium uppercase tracking-wider">Topics:</span>
+              {post.tags.map((t, idx) => (
+                <span key={t.slug}>
+                  {t.name}
+                  {idx < (post.tags?.length ?? 0) - 1 ? ' ·' : ''}
+                </span>
+              ))}
+            </div>
+          )}
 
           <div className="mt-16 border-y border-[#EAEAEA] py-7 dark:border-[#222222]">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

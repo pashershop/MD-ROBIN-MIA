@@ -5,7 +5,7 @@ import { Menu, Moon, Sun, X } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { Container } from './ui/DesignSystem';
 
-const NAV_ITEMS = [
+const DEFAULT_NAV_ITEMS = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
   { label: 'Skills', to: '/skills' },
@@ -19,6 +19,11 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { pathname } = useLocation();
   const shouldReduceMotion = useReducedMotion();
+
+  const navItems =
+    content.navigationMenu && content.navigationMenu.length > 0
+      ? content.navigationMenu.filter((item) => item.visible !== false && !item.to.startsWith('/admin'))
+      : DEFAULT_NAV_ITEMS;
 
   useEffect(() => {
     setMobileOpen(false);
@@ -49,7 +54,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-6 lg:gap-8">
           <nav aria-label="Primary Navigation" className="hidden md:flex items-center gap-6 lg:gap-8">
-            {NAV_ITEMS.map((item) => {
+            {navItems.map((item) => {
               const isActive =
                 item.to === '/' ? pathname === '/' : pathname.startsWith(item.to);
               return (
@@ -145,7 +150,7 @@ export function Navbar() {
             >
               <Container className="py-4">
                 <nav aria-label="Mobile Navigation" className="flex flex-col">
-                  {[...NAV_ITEMS, { label: 'Achievements', to: '/achievements' }].map(
+                  {[...navItems, { label: 'Achievements', to: '/achievements' }].map(
                     (item, idx) => (
                       <NavLink
                         key={item.to}
